@@ -5,20 +5,20 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Trophy, 
-  Zap, 
-  Users, 
-  Gamepad2, 
-  Star, 
-  ChevronDown, 
+import {
+  Trophy,
+  Zap,
+  Users,
+  Gamepad2,
+  Star,
+  ChevronDown,
   Plus,
   Minus,
-  X, 
-  CheckCircle2, 
-  Instagram, 
-  Twitter, 
-  Youtube, 
+  X,
+  CheckCircle2,
+  Instagram,
+  Twitter,
+  Youtube,
   Globe,
   ArrowRight,
   MessageSquare,
@@ -153,27 +153,27 @@ const STEPS = [
 const BackgroundEffects = () => (
   <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
     {/* Animated Blobs */}
-    <motion.div 
-      animate={{ 
-        x: [0, 100, 0], 
+    <motion.div
+      animate={{
+        x: [0, 100, 0],
         y: [0, 50, 0],
         scale: [1, 1.2, 1]
       }}
       transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
       className="absolute -top-[10%] -left-[5%] w-[40%] h-[40%] bg-brand/10 blur-[100px] rounded-full"
     />
-    <motion.div 
-      animate={{ 
-        x: [0, -100, 0], 
+    <motion.div
+      animate={{
+        x: [0, -100, 0],
         y: [0, -50, 0],
         scale: [1, 1.3, 1]
       }}
       transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
       className="absolute top-[30%] -right-[5%] w-[35%] h-[35%] bg-brand/5 blur-[90px] rounded-full"
     />
-    <motion.div 
-      animate={{ 
-        x: [0, 50, 0], 
+    <motion.div
+      animate={{
+        x: [0, 50, 0],
         y: [0, 100, 0],
         scale: [1, 1.1, 1]
       }}
@@ -198,7 +198,7 @@ const Navbar = () => (
         <a href="#creator-types" className="hover:text-brand transition-colors">Creator Types</a>
         <a href="#faq" className="hover:text-brand transition-colors">FAQ</a>
       </div>
-      <button 
+      <button
         onClick={() => document.getElementById('signup')?.scrollIntoView({ behavior: 'smooth' })}
         className="bg-complement text-black px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-wider hover:bg-brand hover:text-white transition-all"
       >
@@ -209,7 +209,7 @@ const Navbar = () => (
 );
 
 const FeatureCard: React.FC<{ feature: Feature; index: number }> = ({ feature, index }) => (
-  <motion.div 
+  <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
@@ -218,9 +218,9 @@ const FeatureCard: React.FC<{ feature: Feature; index: number }> = ({ feature, i
   >
     {/* Full-Bleed Image */}
     <div className="absolute inset-0 z-0">
-      <img 
-        src={feature.image} 
-        alt={feature.title} 
+      <img
+        src={feature.image}
+        alt={feature.title}
         className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-50 group-hover:opacity-80"
         referrerPolicy="no-referrer"
       />
@@ -255,7 +255,7 @@ const FAQSection = () => {
       <div className="space-y-2">
         {FAQS.map((faq, i) => (
           <div key={i} className="border-b border-white/10 last:border-0">
-            <button 
+            <button
               onClick={() => setOpenIndex(openIndex === i ? null : i)}
               className="w-full py-6 flex items-center justify-between text-left group transition-all"
             >
@@ -280,18 +280,18 @@ const FAQSection = () => {
             </button>
             <AnimatePresence initial={false}>
               {openIndex === i && (
-                <motion.div 
+                <motion.div
                   initial={{ height: 0, opacity: 0 }}
-                  animate={{ 
-                    height: 'auto', 
+                  animate={{
+                    height: 'auto',
                     opacity: 1,
                     transition: {
                       height: { duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] },
                       opacity: { duration: 0.25, delay: 0.1 }
                     }
                   }}
-                  exit={{ 
-                    height: 0, 
+                  exit={{
+                    height: 0,
                     opacity: 0,
                     transition: {
                       height: { duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] },
@@ -317,14 +317,14 @@ const CreatorTypesSection = () => (
   <section id="creator-types" className="py-32 px-6 relative overflow-hidden">
     {/* Background Glows */}
     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(20,184,102,0.05),transparent_70%)]" />
-    
+
     <div className="max-w-7xl mx-auto relative z-10">
       <h2 className="text-5xl md:text-7xl font-black italic uppercase tracking-tighter mb-16">
         Creator <span className="text-brand">Types</span> we recruit
       </h2>
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
         {CREATOR_TYPES.map((type, i) => (
-          <motion.div 
+          <motion.div
             key={i}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -334,9 +334,9 @@ const CreatorTypesSection = () => (
           >
             {/* Full-Bleed Image */}
             <div className="absolute inset-0 z-0">
-              <img 
-                src={type.image} 
-                alt={type.title} 
+              <img
+                src={type.image}
+                alt={type.title}
                 className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-40 group-hover:opacity-60"
                 referrerPolicy="no-referrer"
               />
@@ -367,13 +367,13 @@ const HowItWorksSection = () => {
   return (
     <section id="how-it-works" className="py-32 px-6 overflow-hidden relative bg-black">
       {/* Background Grid Pattern */}
-      <div className="absolute inset-0 z-0 opacity-[0.03]" 
-           style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+      <div className="absolute inset-0 z-0 opacity-[0.03]"
+        style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-8">
           <div className="max-w-xl">
-            <motion.h2 
+            <motion.h2
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -381,7 +381,7 @@ const HowItWorksSection = () => {
             >
               How it <span className="text-brand">Works.</span>
             </motion.h2>
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -392,14 +392,14 @@ const HowItWorksSection = () => {
             </motion.p>
           </div>
         </div>
-        
+
         <div className="relative">
           {/* Progression Line (Desktop) */}
           <div className="hidden lg:block absolute top-[60px] left-0 w-full h-px bg-white/5 z-0">
-            <motion.div 
+            <motion.div
               initial={{ width: '0%' }}
-              animate={{ 
-                width: hoveredIndex !== null ? `${(hoveredIndex + 0.5) * 25}%` : '0%' 
+              animate={{
+                width: hoveredIndex !== null ? `${(hoveredIndex + 0.5) * 25}%` : '0%'
               }}
               transition={{ type: 'spring', stiffness: 100, damping: 20 }}
               className="h-full bg-brand relative"
@@ -410,7 +410,7 @@ const HowItWorksSection = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
             {STEPS.map((step, i) => (
-              <motion.div 
+              <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -475,7 +475,7 @@ const SignupForm = () => {
 
   if (isSubmitted) {
     return (
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         className="bg-dark-green border border-brand/30 p-12 rounded-3xl text-center"
@@ -487,7 +487,7 @@ const SignupForm = () => {
         <p className="text-muted-text max-w-md mx-auto">
           Our team will review your profile and get back to you within 48 hours. Get ready to change the game.
         </p>
-        <button 
+        <button
           onClick={() => setIsSubmitted(false)}
           className="mt-8 text-brand font-bold uppercase tracking-widest text-sm hover:underline"
         >
@@ -501,7 +501,7 @@ const SignupForm = () => {
     <div id="signup" className="py-32 px-6 relative overflow-hidden">
       {/* Background Accents */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(20,184,102,0.04),transparent_60%)]" />
-      
+
       <div className="max-w-4xl mx-auto relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div>
@@ -530,47 +530,47 @@ const SignupForm = () => {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Full Name</label>
-                <input 
+                <input
                   required
-                  type="text" 
+                  type="text"
                   className="w-full bg-[#141414] border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors"
                   placeholder="John Doe"
                   value={formData.name}
-                  onChange={e => setFormData({...formData, name: e.target.value})}
+                  onChange={e => setFormData({ ...formData, name: e.target.value })}
                 />
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Email Address</label>
-                <input 
+                <input
                   required
-                  type="email" 
+                  type="email"
                   className="w-full bg-[#141414] border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors"
                   placeholder="john@example.com"
                   value={formData.email}
-                  onChange={e => setFormData({...formData, email: e.target.value})}
+                  onChange={e => setFormData({ ...formData, email: e.target.value })}
                 />
               </div>
             </div>
 
             <div className="space-y-2">
               <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Primary Social Handle & Platform</label>
-              <input 
+              <input
                 required
-                type="text" 
+                type="text"
                 className="w-full bg-[#141414] border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors"
                 placeholder="@username on Twitch/YouTube"
                 value={formData.socials}
-                onChange={e => setFormData({...formData, socials: e.target.value})}
+                onChange={e => setFormData({ ...formData, socials: e.target.value })}
               />
             </div>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Content Type</label>
-                <select 
+                <select
                   className="w-full bg-[#141414] border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors appearance-none"
                   value={formData.contentType}
-                  onChange={e => setFormData({...formData, contentType: e.target.value})}
+                  onChange={e => setFormData({ ...formData, contentType: e.target.value })}
                 >
                   <option value="reels">Reels / Shorts</option>
                   <option value="posts">Static Posts</option>
@@ -580,26 +580,26 @@ const SignupForm = () => {
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Total Reach</label>
-                <input 
+                <input
                   required
-                  type="text" 
+                  type="text"
                   className="w-full bg-[#141414] border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors"
                   placeholder="e.g. 50k+"
                   value={formData.reach}
-                  onChange={e => setFormData({...formData, reach: e.target.value})}
+                  onChange={e => setFormData({ ...formData, reach: e.target.value })}
                 />
               </div>
             </div>
 
             <div className="space-y-2">
               <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Game Formats You Create For</label>
-              <input 
+              <input
                 required
-                type="text" 
+                type="text"
                 className="w-full bg-[#141414] border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors"
                 placeholder="FPS, RPG, MOBA, etc."
                 value={formData.gameFormats}
-                onChange={e => setFormData({...formData, gameFormats: e.target.value})}
+                onChange={e => setFormData({ ...formData, gameFormats: e.target.value })}
               />
             </div>
 
@@ -608,12 +608,12 @@ const SignupForm = () => {
               <div className="flex gap-4">
                 {['yes', 'maybe'].map(opt => (
                   <label key={opt} className="flex items-center gap-2 cursor-pointer group">
-                    <input 
-                      type="radio" 
-                      name="willingness" 
+                    <input
+                      type="radio"
+                      name="willingness"
                       value={opt}
                       checked={formData.willingness === opt}
-                      onChange={e => setFormData({...formData, willingness: e.target.value})}
+                      onChange={e => setFormData({ ...formData, willingness: e.target.value })}
                       className="hidden"
                     />
                     <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${formData.willingness === opt ? 'border-brand' : 'border-white/20'}`}>
@@ -625,7 +625,7 @@ const SignupForm = () => {
               </div>
             </div>
 
-            <button 
+            <button
               type="submit"
               className="w-full bg-brand text-black py-4 rounded-xl font-black uppercase tracking-widest hover:bg-white transition-colors group flex items-center justify-center gap-2"
             >
@@ -686,7 +686,7 @@ const Footer = () => (
           </ul>
         </div>
       </div>
-      
+
       <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-text uppercase tracking-widest">
         <p>© 2026 JG Gamechanger Network. All rights reserved.</p>
         <div className="flex gap-8">
@@ -708,32 +708,32 @@ export default function App() {
       <header className="relative h-screen flex items-center justify-center overflow-hidden pt-20">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/60 to-[#141414] z-10" />
-          <motion.img 
+          <motion.img
             initial={{ scale: 1.05 }}
             animate={{ scale: 1 }}
             transition={{ duration: 15, repeat: Infinity, repeatType: "reverse" }}
-            src="https://jiogames.com/assets/banner/card-banner.png" 
-            alt="Smiling Gamer" 
+            src="https://jiogames.com/assets/banner/card-banner.png"
+            alt="Smiling Gamer"
             className="w-full h-full object-cover opacity-60"
             referrerPolicy="no-referrer"
           />
-          
+
           {/* Floating Particles */}
           {[...Array(20)].map((_, i) => (
             <motion.div
               key={i}
-              initial={{ 
-                x: Math.random() * 100 + '%', 
+              initial={{
+                x: Math.random() * 100 + '%',
                 y: Math.random() * 100 + '%',
                 opacity: Math.random() * 0.5
               }}
-              animate={{ 
+              animate={{
                 y: [null, '-20%', '120%'],
                 opacity: [0, 0.5, 0]
               }}
-              transition={{ 
-                duration: Math.random() * 10 + 10, 
-                repeat: Infinity, 
+              transition={{
+                duration: Math.random() * 10 + 10,
+                repeat: Infinity,
                 ease: "linear",
                 delay: Math.random() * 10
               }}
@@ -760,13 +760,13 @@ export default function App() {
               GameChanger Networks is how JioGames discovers, supports and activates creators across formats, Get access to opportunities, drops, campaigns, events and collaboration as we scale a creator engine for JioGames now, and Jio next.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <button 
+              <button
                 onClick={() => document.getElementById('signup')?.scrollIntoView({ behavior: 'smooth' })}
                 className="w-full sm:w-auto bg-white text-black px-10 py-5 rounded-full text-lg font-black uppercase tracking-widest hover:bg-brand hover:text-white transition-all transform hover:scale-105"
               >
                 Sign Up Now
               </button>
-              <button 
+              <button
                 onClick={() => document.getElementById('perks')?.scrollIntoView({ behavior: 'smooth' })}
                 className="w-full sm:w-auto border border-white/20 px-10 py-5 rounded-full text-lg font-black uppercase tracking-widest hover:bg-white/10 transition-all"
               >
