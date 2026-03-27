@@ -269,7 +269,7 @@ const CreatorTypesSection = () => (
                 <h3 className="text-2xl font-black italic uppercase tracking-tighter mb-3 leading-none group-hover:text-brand transition-colors duration-500">
                   {type.title}
                 </h3>
-                <ul className="text-muted-text leading-relaxed text-sm opacity-0 group-hover:opacity-100 transition-all duration-500 max-h-0 group-hover:max-h-32 overflow-hidden list-disc list-inside space-y-1">
+                <ul className="text-muted-text font-bold leading-relaxed text-lg opacity-0 group-hover:opacity-100 transition-all duration-500 max-h-0 group-hover:max-h-32 overflow-hidden list-disc list-inside space-y-1">
                   {type.description.split(',').map((item, idx) => (
                     <li key={idx}>{item.trim().replace(/\.$/, '')}</li>
                   ))}
@@ -379,20 +379,45 @@ const HowItWorksSection = () => {
 };
 
 const SignupForm = () => {
+  const [step, setStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    socials: '',
-    reach: '',
-    contentType: 'reels',
+    socials: [{ platform: 'youtube', handle: '', contentType: 'reels', reach: '' }],
     gameFormats: '',
     willingness: 'yes'
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitted(true);
+    setIsLoading(true);
+    setError('');
+
+    try {
+      // Paste your Google Apps Script URL here!
+      const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx0FCQXru1dQEaP2dchMAqpx_DBtNctkWZgEGMqTiQwewPAc5p-1vSm0k-hta_T5YB04w/exec';
+
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        // 'no-cors' is often required for Google Apps Script to prevent CORS blocking,
+        // though it means you can't read the exact response.
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      setIsLoading(false);
+      setIsSubmitted(true);
+    } catch (err) {
+      console.error('Submission error:', err);
+      setError('Something went wrong submitting your application. Please try again.');
+      setIsLoading(false);
+    }
   };
 
   if (isSubmitted) {
@@ -449,111 +474,250 @@ const SignupForm = () => {
           </div>
 
           <form onSubmit={handleSubmit} className="bg-dark-green/40 border border-white/10 p-8 rounded-3xl space-y-6">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Full Name</label>
-                <input
-                  required
-                  type="text"
-                  className="w-full bg-[#141414] border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors"
-                  placeholder="John Doe"
-                  value={formData.name}
-                  onChange={e => setFormData({ ...formData, name: e.target.value })}
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Email Address</label>
-                <input
-                  required
-                  type="email"
-                  className="w-full bg-[#141414] border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors"
-                  placeholder="john@example.com"
-                  value={formData.email}
-                  onChange={e => setFormData({ ...formData, email: e.target.value })}
-                />
-              </div>
+            {/* Step Progress */}
+            <div className="flex gap-2 mb-8">
+              {[1, 2, 3].map((s) => (
+                <div key={s} className={`h-1 flex-1 rounded-full transition-colors ${step >= s ? 'bg-brand' : 'bg-white/10'}`} />
+              ))}
             </div>
 
-            <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Primary Social Handle & Platform</label>
-              <input
-                required
-                type="text"
-                className="w-full bg-[#141414] border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors"
-                placeholder="@username on Twitch/YouTube"
-                value={formData.socials}
-                onChange={e => setFormData({ ...formData, socials: e.target.value })}
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Content Type</label>
-                <select
-                  className="w-full bg-[#141414] border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors appearance-none"
-                  value={formData.contentType}
-                  onChange={e => setFormData({ ...formData, contentType: e.target.value })}
-                >
-                  <option value="reels">Reels / Shorts</option>
-                  <option value="posts">Static Posts</option>
-                  <option value="news">Gaming News</option>
-                  <option value="streams">Live Streams</option>
-                </select>
-              </div>
-              <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Total Reach</label>
-                <input
-                  required
-                  type="text"
-                  className="w-full bg-[#141414] border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors"
-                  placeholder="e.g. 50k+"
-                  value={formData.reach}
-                  onChange={e => setFormData({ ...formData, reach: e.target.value })}
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Game Formats You Create For</label>
-              <input
-                required
-                type="text"
-                className="w-full bg-[#141414] border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors"
-                placeholder="FPS, RPG, MOBA, etc."
-                value={formData.gameFormats}
-                onChange={e => setFormData({ ...formData, gameFormats: e.target.value })}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Willing to participate in campaigns?</label>
-              <div className="flex gap-4">
-                {['yes', 'maybe'].map(opt => (
-                  <label key={opt} className="flex items-center gap-2 cursor-pointer group">
+            {/* STEP 1: Personal Info */}
+            {step === 1 && (
+              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
+                <div>
+                  <h3 className="text-2xl font-black uppercase italic tracking-tighter text-white mb-2">Player Profile</h3>
+                  <p className="text-sm text-muted-text">Let's start with the basics.</p>
+                </div>
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Full Name</label>
                     <input
-                      type="radio"
-                      name="willingness"
-                      value={opt}
-                      checked={formData.willingness === opt}
-                      onChange={e => setFormData({ ...formData, willingness: e.target.value })}
-                      className="hidden"
+                      required
+                      type="text"
+                      className="w-full bg-[#141414] border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors"
+                      placeholder="John Doe"
+                      value={formData.name}
+                      onChange={e => setFormData({ ...formData, name: e.target.value })}
                     />
-                    <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${formData.willingness === opt ? 'border-brand' : 'border-white/20'}`}>
-                      {formData.willingness === opt && <div className="w-2.5 h-2.5 bg-brand rounded-full" />}
-                    </div>
-                    <span className={`capitalize ${formData.willingness === opt ? 'text-white' : 'text-muted-text'}`}>{opt}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Email Address</label>
+                    <input
+                      required
+                      type="email"
+                      className="w-full bg-[#141414] border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors"
+                      placeholder="john@example.com"
+                      value={formData.email}
+                      onChange={e => setFormData({ ...formData, email: e.target.value })}
+                    />
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setStep(2)}
+                  className="w-full bg-white/5 border border-white/10 text-white py-4 rounded-xl font-black uppercase tracking-widest hover:bg-white hover:text-black transition-colors flex items-center justify-center gap-2"
+                >
+                  Next Step <ArrowRight className="w-5 h-5" />
+                </button>
+              </motion.div>
+            )}
 
-            <button
-              type="submit"
-              className="w-full bg-brand text-black py-4 rounded-xl font-black uppercase tracking-widest hover:bg-white transition-colors group flex items-center justify-center gap-2"
-            >
-              Submit Application
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
+            {/* STEP 2: Socials */}
+            {step === 2 && (
+              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
+                <div>
+                  <h3 className="text-2xl font-black uppercase italic tracking-tighter text-white mb-2">Digital Footprint</h3>
+                  <p className="text-sm text-muted-text">Where do you create?</p>
+                </div>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between border-t border-white/10 pt-6">
+                    <label className="text-sm font-black uppercase italic tracking-widest text-white">Social Handles & Metrics</label>
+                    <button
+                      type="button"
+                      onClick={() => setFormData({ ...formData, socials: [...formData.socials, { platform: 'youtube', handle: '', contentType: 'reels', reach: '' }] })}
+                      className="text-xs text-brand font-bold uppercase tracking-widest hover:text-white flex items-center gap-1 transition-colors"
+                    >
+                      <Plus className="w-3 h-3" /> Add Another Platform
+                    </button>
+                  </div>
+                  <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                    {formData.socials.map((social, index) => (
+                      <div key={index} className="bg-[#141414] border border-white/10 p-5 rounded-2xl relative space-y-4">
+                        {formData.socials.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const newSocials = formData.socials.filter((_, i) => i !== index);
+                              setFormData({ ...formData, socials: newSocials });
+                            }}
+                            className="absolute right-4 top-4 text-muted-text hover:text-red-500 transition-colors"
+                            title="Remove handle"
+                          >
+                            <X className="w-5 h-5" />
+                          </button>
+                        )}
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Platform</label>
+                            <select
+                              className="w-full bg-dark-green/50 border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors appearance-none"
+                              value={social.platform}
+                              onChange={e => {
+                                const newSocials = [...formData.socials];
+                                newSocials[index].platform = e.target.value;
+                                setFormData({ ...formData, socials: newSocials });
+                              }}
+                            >
+                              <option value="youtube">YouTube</option>
+                              <option value="instagram">Instagram</option>
+                              <option value="twitch">Twitch</option>
+                              <option value="tiktok">TikTok</option>
+                              <option value="twitter">X / Twitter</option>
+                            </select>
+                          </div>
+                          
+                          <div className="space-y-2">
+                            <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Handle / Link</label>
+                            <input
+                              required
+                              type="text"
+                              className="w-full bg-dark-green/50 border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors"
+                              placeholder={social.platform === 'youtube' ? 'youtube.com/@username' : '@username'}
+                              value={social.handle}
+                              onChange={e => {
+                                const newSocials = [...formData.socials];
+                                newSocials[index].handle = e.target.value;
+                                setFormData({ ...formData, socials: newSocials });
+                              }}
+                            />
+                          </div>
+
+                          <div className="space-y-2">
+                            <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Content Type</label>
+                            <select
+                              className="w-full bg-dark-green/50 border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors appearance-none"
+                              value={social.contentType}
+                              onChange={e => {
+                                const newSocials = [...formData.socials];
+                                newSocials[index].contentType = e.target.value;
+                                setFormData({ ...formData, socials: newSocials });
+                              }}
+                            >
+                              <option value="reels">Reels / Shorts</option>
+                              <option value="posts">Static Posts</option>
+                              <option value="news">Gaming News</option>
+                              <option value="streams">Live Streams</option>
+                              <option value="longform">Long-form Video</option>
+                            </select>
+                          </div>
+
+                          <div className="space-y-2">
+                            <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Total Reach/Subs</label>
+                            <input
+                              required
+                              type="text"
+                              className="w-full bg-dark-green/50 border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors"
+                              placeholder="e.g. 50k+"
+                              value={social.reach}
+                              onChange={e => {
+                                const newSocials = [...formData.socials];
+                                newSocials[index].reach = e.target.value;
+                                setFormData({ ...formData, socials: newSocials });
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex gap-4">
+                  <button
+                    type="button"
+                    onClick={() => setStep(1)}
+                    className="flex-1 bg-transparent border border-white/10 text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:border-white/30 transition-colors"
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setStep(3)}
+                    className="flex-[2] bg-white/5 border border-white/10 text-white py-4 rounded-xl font-black uppercase tracking-widest hover:bg-white hover:text-black transition-colors flex items-center justify-center gap-2"
+                  >
+                    Next Step <ArrowRight className="w-5 h-5" />
+                  </button>
+                </div>
+              </motion.div>
+            )}
+
+            {/* STEP 3: Final Details */}
+            {step === 3 && (
+              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
+                <div>
+                  <h3 className="text-2xl font-black uppercase italic tracking-tighter text-white mb-2">Game Formats</h3>
+                  <p className="text-sm text-muted-text">What do you love to play?</p>
+                </div>
+                
+                <div className="space-y-6">
+                  <div className="space-y-2 border-t border-white/10 pt-6">
+                    <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Game Formats You Create For</label>
+                    <input
+                      required
+                      type="text"
+                      className="w-full bg-[#141414] border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors"
+                      placeholder="FPS, RPG, MOBA, etc."
+                      value={formData.gameFormats}
+                      onChange={e => setFormData({ ...formData, gameFormats: e.target.value })}
+                    />
+                  </div>
+
+                  <div className="space-y-4">
+                    <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Willing to participate in campaigns?</label>
+                    <div className="flex gap-4 flex-wrap">
+                      {['yes', 'maybe', 'only remote', 'it depends'].map(opt => (
+                        <label key={opt} className="flex items-center gap-2 cursor-pointer group">
+                          <input
+                            type="radio"
+                            name="willingness"
+                            value={opt}
+                            checked={formData.willingness === opt}
+                            onChange={e => setFormData({ ...formData, willingness: e.target.value })}
+                            className="hidden"
+                          />
+                          <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${formData.willingness === opt ? 'border-brand' : 'border-white/20'}`}>
+                            {formData.willingness === opt && <div className="w-2.5 h-2.5 bg-brand rounded-full" />}
+                          </div>
+                          <span className={`capitalize ${formData.willingness === opt ? 'text-white' : 'text-muted-text'}`}>{opt}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-2 mt-8">
+                  {error && <p className="text-red-500 text-sm font-bold">{error}</p>}
+                  <div className="flex gap-4">
+                    <button
+                      type="button"
+                      onClick={() => setStep(2)}
+                      className="flex-1 bg-transparent border border-white/10 text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:border-white/30 transition-colors"
+                      disabled={isLoading}
+                    >
+                      Back
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={isLoading}
+                      className="flex-[2] bg-brand text-black py-4 rounded-xl font-black uppercase tracking-widest hover:bg-white transition-colors group flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                    >
+                      {isLoading ? 'Submitting...' : 'Submit Application'}
+                      {!isLoading && <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            )}
           </form>
         </div>
       </div>
