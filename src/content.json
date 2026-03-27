@@ -1,0 +1,101 @@
+{
+  "features": [
+    {
+      "id": "opportunities",
+      "title": "Access to Opportunities",
+      "description": "Get direct access to exclusive brand deals and sponsorship opportunities tailored to your niche.",
+      "icon": "Trophy",
+      "image": "images/players.avif"
+    },
+    {
+      "id": "campaigns",
+      "title": "Campaigns and Drops",
+      "description": "Participate in high-impact UGC campaigns and limited-edition product drops.",
+      "icon": "Zap",
+      "image": "images/controller.jpeg"
+    },
+    {
+      "id": "early-access",
+      "title": "Early Access",
+      "description": "Be the first to play new titles and test upcoming features before they hit the mainstream.",
+      "icon": "Star",
+      "image": "/images/earlyaccess.jpg"
+    },
+    {
+      "id": "events",
+      "title": "Events and Tournaments",
+      "description": "Compete in exclusive tournaments and attend VIP industry events worldwide.",
+      "icon": "Gamepad2",
+      "image": "images/tourn.webp"
+    },
+    {
+      "id": "community",
+      "title": "Community and Visibility",
+      "description": "Boost your reach through our network and connect with a community of elite creators.",
+      "icon": "Users",
+      "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "What is the JG Gamechanger Network?",
+      "answer": "JG Gamechanger Network is a premier platform designed to bridge the gap between elite gaming creators and world-class brands for UGC campaigns and partnerships."
+    },
+    {
+      "question": "How do I qualify for the network?",
+      "answer": "We look for creators with high engagement, consistent quality, and a strong presence in the gaming community. Every application is manually vetted by our team."
+    },
+    {
+      "question": "Is there a cost to join?",
+      "answer": "No, joining the network is completely free for creators. We earn by facilitating successful partnerships between you and the brands."
+    },
+    {
+      "question": "What kind of campaigns can I expect?",
+      "answer": "Campaigns range from sponsored gameplay and product reviews to long-term brand ambassadorships and exclusive event coverage."
+    }
+  ],
+  "creatorTypes": [
+    {
+      "title": "Gameplay Creators",
+      "description": "Livestreams, walkthroughs, highlights, challenges, clips.",
+      "image": "/images/creator.png"
+    },
+    {
+      "title": "Short-form",
+      "description": "Reels/Shorts, edits, hooks, reactions, memes.",
+      "image": "/images/reels.jpeg"
+    },
+    {
+      "title": "Esports",
+      "description": "Competitive players, hosts, analysts, tournament/event coverage.",
+      "image": "/images/esports.png"
+    },
+    {
+      "title": "Fan Creators",
+      "description": "Art, Cosplayers, UGC concepts, community Builds.",
+      "image": "/images/cosplay.png"
+    }
+  ],
+  "steps": [
+    {
+      "number": "01",
+      "title": "Apply",
+      "description": "Submit your details, platforms and format. We only ask what helps us activate your quickly."
+    },
+    {
+      "number": "02",
+      "title": "Review",
+      "description": "We score for quality, consistency and fit. Creators are bucketed for the right opportunities."
+    },
+    {
+      "number": "03",
+      "title": "Activate",
+      "description": "Selected creators receive briefs, assets and opportunities. As the Network grows, rewards expand."
+    },
+    {
+      "number": "04",
+      "title": "Scale",
+      "description": "We turn what works into a repeatable creator engines for JioGames now, and Jio next."
+    }
+  ]
+}

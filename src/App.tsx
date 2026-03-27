@@ -43,110 +43,30 @@ interface FAQItem {
   answer: string;
 }
 
-// --- Constants ---
+import contentData from './content.json';
 
-const FEATURES: Feature[] = [
-  {
-    id: 'opportunities',
-    title: 'Access to Opportunities',
-    description: 'Get direct access to exclusive brand deals and sponsorship opportunities tailored to your niche.',
-    icon: <Trophy className="w-6 h-6" />,
-    image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=800'
-  },
-  {
-    id: 'campaigns',
-    title: 'Campaigns and Drops',
-    description: 'Participate in high-impact UGC campaigns and limited-edition product drops.',
-    icon: <Zap className="w-6 h-6" />,
-    image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=800'
-  },
-  {
-    id: 'early-access',
-    title: 'Early Access',
-    description: 'Be the first to play new titles and test upcoming features before they hit the mainstream.',
-    icon: <Star className="w-6 h-6" />,
-    image: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&q=80&w=800'
-  },
-  {
-    id: 'events',
-    title: 'Events and Tournaments',
-    description: 'Compete in exclusive tournaments and attend VIP industry events worldwide.',
-    icon: <Gamepad2 className="w-6 h-6" />,
-    image: 'https://images.unsplash.com/photo-1511882150382-421056c89033?auto=format&fit=crop&q=80&w=800'
-  },
-  {
-    id: 'community',
-    title: 'Community and Visibility',
-    description: 'Boost your reach through our network and connect with a community of elite creators.',
-    icon: <Users className="w-6 h-6" />,
-    image: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800'
-  }
-];
+const IconMap: Record<string, React.ElementType> = {
+  Trophy,
+  Zap,
+  Star,
+  Gamepad2,
+  Users
+};
 
-const FAQS: FAQItem[] = [
-  {
-    question: "What is the JG Gamechanger Network?",
-    answer: "JG Gamechanger Network is a premier platform designed to bridge the gap between elite gaming creators and world-class brands for UGC campaigns and partnerships."
-  },
-  {
-    question: "How do I qualify for the network?",
-    answer: "We look for creators with high engagement, consistent quality, and a strong presence in the gaming community. Every application is manually vetted by our team."
-  },
-  {
-    question: "Is there a cost to join?",
-    answer: "No, joining the network is completely free for creators. We earn by facilitating successful partnerships between you and the brands."
-  },
-  {
-    question: "What kind of campaigns can I expect?",
-    answer: "Campaigns range from sponsored gameplay and product reviews to long-term brand ambassadorships and exclusive event coverage."
-  }
-];
+const FEATURES: Feature[] = contentData.features.map(f => {
+  const IconComponent = IconMap[f.icon];
+  return {
+    id: f.id,
+    title: f.title,
+    description: f.description,
+    image: f.image,
+    icon: <IconComponent className="w-6 h-6" />
+  };
+});
 
-const CREATOR_TYPES = [
-  {
-    title: "Gameplay Creators",
-    description: "Livestreams, walkthroughs, highlights, challenges, clips.",
-    image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=1000"
-  },
-  {
-    title: "Short-form",
-    description: "Reels/Shorts, edits, hooks, reactions, memes.",
-    image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80&w=1000"
-  },
-  {
-    title: "Esports",
-    description: "Competitive players, hosts, analysts, tournament/event coverage.",
-    image: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&q=80&w=1000"
-  },
-  {
-    title: "Fan Creators",
-    description: "Art, Cosplayers, UGC concepts, community Builds.",
-    image: "https://images.unsplash.com/photo-1560415755-bd80d06eda60?auto=format&fit=crop&q=80&w=1000"
-  }
-];
-
-const STEPS = [
-  {
-    number: "01",
-    title: "Apply",
-    description: "Submit your details, platforms and format. We only ask what helps us activate your quickly."
-  },
-  {
-    number: "02",
-    title: "Review",
-    description: "We score for quality, consistency and fit. Creators are bucketed for the right opportunities."
-  },
-  {
-    number: "03",
-    title: "Activate",
-    description: "Selected creators receive briefs, assets and opportunities. As the Network grows, rewards expand."
-  },
-  {
-    number: "04",
-    title: "Scale",
-    description: "We turn what works into a repeatable creator engines for JioGames now, and Jio next."
-  }
-];
+const FAQS: FAQItem[] = contentData.faqs;
+const CREATOR_TYPES = contentData.creatorTypes;
+const STEPS = contentData.steps;
 
 // --- Components ---
 
@@ -349,9 +269,11 @@ const CreatorTypesSection = () => (
                 <h3 className="text-2xl font-black italic uppercase tracking-tighter mb-3 leading-none group-hover:text-brand transition-colors duration-500">
                   {type.title}
                 </h3>
-                <p className="text-muted-text leading-relaxed text-sm opacity-0 group-hover:opacity-100 transition-all duration-500 max-h-0 group-hover:max-h-24 overflow-hidden">
-                  {type.description}
-                </p>
+                <ul className="text-muted-text leading-relaxed text-sm opacity-0 group-hover:opacity-100 transition-all duration-500 max-h-0 group-hover:max-h-32 overflow-hidden list-disc list-inside space-y-1">
+                  {type.description.split(',').map((item, idx) => (
+                    <li key={idx}>{item.trim().replace(/\.$/, '')}</li>
+                  ))}
+                </ul>
               </div>
             </div>
           </motion.div>
