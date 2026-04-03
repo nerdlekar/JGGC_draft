@@ -97,5 +97,140 @@
       "title": "Scale",
       "description": "We turn what works into a repeatable creator engines for JioGames now, and Jio next."
     }
+  ],
+  "footerColumns": [
+    {
+      "title": "Devices",
+      "links": [
+        {
+          "label": "Jio Set-Top-Box",
+          "url": "https://www.jio.com/jcms/jiofiber/services/jio-set-top-box/"
+        },
+        {
+          "label": "Jio Controller",
+          "url": "https://www.jiomart.com/p/electronics/jio-jgc100-bluetooth-game-controller-black/602963448"
+        }
+      ]
+    },
+    {
+      "title": "Gaming Zone",
+      "links": [
+        {
+          "label": "Cloud Gaming",
+          "url": "https://jiogames.com/"
+        },
+        {
+          "label": "Online Gaming",
+          "url": "https://jiogames.com/online-gaming"
+        },
+        {
+          "label": "Instant",
+          "url": "https://play.jiogames.com/"
+        },
+        {
+          "label": "Watch",
+          "url": "https://watch.jiogames.com/"
+        },
+        {
+          "label": "Compte",
+          "url": "https://play.jiogames.com/esports"
+        },
+        {
+          "label": "Store",
+          "url": "https://store.jiogames.com/"
+        }
+      ]
+    },
+    {
+      "title": "Genres",
+      "links": [
+        {
+          "label": "Action Games",
+          "url": "https://jiogames.com/online-gaming/action"
+        },
+        {
+          "label": "Adventure Games",
+          "url": "https://jiogames.com/online-gaming/adventure"
+        },
+        {
+          "label": "Racing Games",
+          "url": "https://jiogames.com/online-gaming/racing"
+        },
+        {
+          "label": "Sports Games",
+          "url": "https://jiogames.com/online-gaming/sports"
+        },
+        {
+          "label": "Arcade Games",
+          "url": "https://jiogames.com/online-gaming/arcade"
+        },
+        {
+          "label": "Casual Games",
+          "url": "https://jiogames.com/online-gaming/casual"
+        }
+      ]
+    },
+    {
+      "title": "Business",
+      "links": [
+        {
+          "label": "JioGamesDev",
+          "url": "https://developer.jiogames.com/"
+        },
+        {
+          "label": "Developer Console",
+          "url": "https://publish.jiogames.com/login"
+        },
+        {
+          "label": "Developer Support",
+          "url": "https://developer.jiogames.com/faq.html"
+        }
+      ]
+    },
+    {
+      "title": "Legal",
+      "links": [
+        {
+          "label": "Terms & Conditions",
+          "url": "https://jiogames.com/terms"
+        },
+        {
+          "label": "Privacy Policy",
+          "url": "https://jiogames.com/privacy"
+        }
+      ]
+    }
+  ],
+  "socialHandles": [
+    {
+      "platform": "Facebook",
+      "url": "https://facebook.com/jiogames",
+      "icon": "Facebook"
+    },
+    {
+      "platform": "X",
+      "url": "https://x.com/jiogames",
+      "icon": "Twitter"
+    },
+    {
+      "platform": "Instagram",
+      "url": "https://instagram.com/jiogames",
+      "icon": "Instagram"
+    },
+    {
+      "platform": "YouTube",
+      "url": "https://youtube.com/jiogames",
+      "icon": "Youtube"
+    }
+  ],
+  "appLinks": [
+    {
+      "platform": "Google Play",
+      "url": "https://play.google.com/store/apps/details?id=com.jio.jiogames"
+    },
+    {
+      "platform": "App Store",
+      "url": "https://apps.apple.com/in/app/jiogames-play-cloud-games/id1574760422"
+    }
   ]
 }

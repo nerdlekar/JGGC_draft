@@ -19,6 +19,8 @@ import {
   Instagram,
   Twitter,
   Youtube,
+  Facebook,
+  Smartphone,
   Globe,
   ArrowRight,
   MessageSquare,
@@ -50,7 +52,12 @@ const IconMap: Record<string, React.ElementType> = {
   Zap,
   Star,
   Gamepad2,
-  Users
+  Users,
+  Facebook,
+  Twitter,
+  Instagram,
+  Youtube,
+  Smartphone
 };
 
 const FEATURES: Feature[] = contentData.features.map(f => {
@@ -67,6 +74,9 @@ const FEATURES: Feature[] = contentData.features.map(f => {
 const FAQS: FAQItem[] = contentData.faqs;
 const CREATOR_TYPES = contentData.creatorTypes;
 const STEPS = contentData.steps;
+const FOOTER_COLUMNS: { title: string, links: { label: string, url: string }[] }[] = contentData.footerColumns;
+const SOCIAL_HANDLES: { platform: string, url: string, icon: string }[] = contentData.socialHandles;
+const APP_LINKS: { platform: string, url: string }[] = contentData.appLinks;
 
 // --- Components ---
 
@@ -576,7 +586,7 @@ const SignupForm = () => {
                               <option value="twitter">X / Twitter</option>
                             </select>
                           </div>
-                          
+
                           <div className="space-y-2">
                             <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Handle / Link</label>
                             <input
@@ -658,7 +668,7 @@ const SignupForm = () => {
                   <h3 className="text-2xl font-black uppercase italic tracking-tighter text-white mb-2">Game Formats</h3>
                   <p className="text-sm text-muted-text">What do you love to play?</p>
                 </div>
-                
+
                 <div className="space-y-6">
                   <div className="space-y-2 border-t border-white/10 pt-6">
                     <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Game Formats You Create For</label>
@@ -728,7 +738,7 @@ const SignupForm = () => {
 const Footer = () => (
   <footer className="pt-20 pb-10 px-6 relative z-10">
     <div className="max-w-7xl mx-auto">
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-12 mb-20">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-12 mb-20">
         <div className="col-span-2">
           <div className="flex items-center gap-2 mb-6">
             <div className="w-8 h-8 bg-brand rounded flex items-center justify-center">
@@ -739,38 +749,42 @@ const Footer = () => (
           <p className="text-muted-text max-w-xs mb-8">
             The ultimate creator intake and activation layer for the next generation of gaming partnerships.
           </p>
-          <div className="flex gap-4">
-            <a href="#" className="p-2 bg-dark-green rounded-lg text-muted-text hover:text-brand transition-colors"><Twitter className="w-5 h-5" /></a>
-            <a href="#" className="p-2 bg-dark-green rounded-lg text-muted-text hover:text-brand transition-colors"><Instagram className="w-5 h-5" /></a>
-            <a href="#" className="p-2 bg-dark-green rounded-lg text-muted-text hover:text-brand transition-colors"><Youtube className="w-5 h-5" /></a>
+          <div className="flex flex-wrap gap-4 mb-8">
+            {SOCIAL_HANDLES.map((social, idx) => {
+              const Icon = IconMap[social.icon] || Globe;
+              return (
+                <a key={idx} href={social.url} target="_blank" rel="noreferrer" className="p-2.5 bg-[#27b376] rounded-full text-white hover:opacity-80 transition-opacity">
+                  <Icon className="w-5 h-5" />
+                </a>
+              );
+            })}
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-3">
+            {APP_LINKS.map((app, idx) => (
+              <a key={idx} href={app.url} target="_blank" rel="noreferrer" className="flex items-center gap-3 bg-dark-green border border-white/10 px-4 py-3 rounded-xl hover:border-brand/50 hover:bg-[#141414] transition-all group">
+                <Smartphone className="w-6 h-6 text-brand" />
+                <div className="text-left">
+                  <p className="text-[10px] text-muted-text uppercase tracking-widest leading-none mb-1 group-hover:text-white transition-colors">Download on</p>
+                  <p className="text-sm font-bold leading-none">{app.platform}</p>
+                </div>
+              </a>
+            ))}
           </div>
         </div>
 
-        <div>
-          <h4 className="font-bold uppercase tracking-widest text-xs text-white mb-6">Network</h4>
-          <ul className="space-y-4 text-sm text-muted-text">
-            <li><a href="#" className="hover:text-white transition-colors">How it works</a></li>
-            <li><a href="#" className="hover:text-white transition-colors">Perks and rewards</a></li>
-            <li><a href="#faq" className="hover:text-white transition-colors">FAQ</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 className="font-bold uppercase tracking-widest text-xs text-white mb-6">Legal</h4>
-          <ul className="space-y-4 text-sm text-muted-text">
-            <li><a href="#" className="hover:text-white transition-colors">Policy</a></li>
-            <li><a href="#" className="hover:text-white transition-colors">Disclosure</a></li>
-            <li><a href="#" className="hover:text-white transition-colors">Legal</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h4 className="font-bold uppercase tracking-widest text-xs text-white mb-6">Privacy</h4>
-          <ul className="space-y-4 text-sm text-muted-text">
-            <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
-            <li><a href="#" className="hover:text-white transition-colors">Privacy & Cookie Policy</a></li>
-          </ul>
-        </div>
+        {FOOTER_COLUMNS.map((column, i) => (
+          <div key={i}>
+            <h4 className="font-bold uppercase tracking-widest text-xs text-white mb-6">{column.title}</h4>
+            <ul className="space-y-4 text-sm text-muted-text">
+              {column.links.map((link, j) => (
+                <li key={j}>
+                  <a href={link.url} className="hover:text-white transition-colors">{link.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
 
       <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-text uppercase tracking-widest">
