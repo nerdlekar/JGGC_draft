@@ -525,7 +525,7 @@ const SignupForm = () => {
                 <button
                   type="button"
                   onClick={() => setStep(2)}
-                  className="w-full bg-white/5 border border-white/10 text-white py-4 rounded-xl font-black uppercase tracking-widest hover:bg-white hover:text-black transition-colors flex items-center justify-center gap-2"
+                  className="w-full bg-white/5 border border-white/10 text-white py-3 rounded-xl font-black uppercase tracking-widest hover:bg-white hover:text-black transition-colors flex items-center justify-center gap-2"
                 >
                   Next Step <ArrowRight className="w-5 h-5" />
                 </button>
@@ -646,14 +646,14 @@ const SignupForm = () => {
                   <button
                     type="button"
                     onClick={() => setStep(1)}
-                    className="flex-1 bg-transparent border border-white/10 text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:border-white/30 transition-colors"
+                    className="flex-1 bg-transparent border border-white/10 text-white py-3 rounded-xl font-bold uppercase tracking-widest hover:border-white/30 transition-colors"
                   >
                     Back
                   </button>
                   <button
                     type="button"
                     onClick={() => setStep(3)}
-                    className="flex-[2] bg-white/5 border border-white/10 text-white py-4 rounded-xl font-black uppercase tracking-widest hover:bg-white hover:text-black transition-colors flex items-center justify-center gap-2"
+                    className="flex-[2] bg-white/5 border border-white/10 text-white py-3 rounded-xl font-black uppercase tracking-widest hover:bg-white hover:text-black transition-colors flex items-center justify-center gap-2"
                   >
                     Next Step <ArrowRight className="w-5 h-5" />
                   </button>
@@ -711,7 +711,7 @@ const SignupForm = () => {
                     <button
                       type="button"
                       onClick={() => setStep(2)}
-                      className="flex-1 bg-transparent border border-white/10 text-white py-4 rounded-xl font-bold uppercase tracking-widest hover:border-white/30 transition-colors"
+                      className="flex-1 bg-transparent border border-white/10 text-white py-3 rounded-xl font-bold uppercase tracking-widest hover:border-white/30 transition-colors"
                       disabled={isLoading}
                     >
                       Back
@@ -719,7 +719,7 @@ const SignupForm = () => {
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="flex-[2] bg-brand text-black py-4 rounded-xl font-black uppercase tracking-widest hover:bg-white transition-colors group flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                      className="flex-[2] bg-brand text-black py-3 rounded-xl font-black uppercase tracking-widest hover:bg-white transition-colors group flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                     >
                       {isLoading ? 'Submitting...' : 'Submit Application'}
                       {!isLoading && <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
