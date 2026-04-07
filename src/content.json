@@ -38,20 +38,36 @@
   ],
   "faqs": [
     {
-      "question": "What is the JG Gamechanger Network?",
-      "answer": "JG Gamechanger Network is a premier platform designed to bridge the gap between elite gaming creators and world-class brands for UGC campaigns and partnerships."
+      "question": "What is the JioGames Creator Network?",
+      "answer": "JioGames Creator Network is a premier platform designed to bridge the gap between elite gaming creators and world-class brands for UGC campaigns and partnerships."
     },
     {
       "question": "How do I qualify for the network?",
       "answer": "We look for creators with high engagement, consistent quality, and a strong presence in the gaming community. Every application is manually vetted by our team."
     },
     {
-      "question": "Is there a cost to join?",
-      "answer": "No, joining the network is completely free for creators. We earn by facilitating successful partnerships between you and the brands."
+      "question": "Is this only for gaming creators?",
+      "answer": "Yes—for now. The Creator Network is launching as a gaming-first program."
     },
     {
-      "question": "What kind of campaigns can I expect?",
-      "answer": "Campaigns range from sponsored gameplay and product reviews to long-term brand ambassadorships and exclusive event coverage."
+      "question": "Which platforms are eligible?",
+      "answer": "All major platforms qualify—YouTube, Instagram, Twitch, Facebook. If you consistently create gaming content on any platform, you can apply."
+    },
+    {
+      "question": "Is this a paid program?",
+      "answer": "It’s free to apply and participate. The Creator Network is designed to support creators. Members gain access to monetisation opportunities and partnered benefits."
+    },
+    {
+      "question": "Can I join if I’m part of other creator programs?",
+      "answer": "Yes. Being part of the Creator Network doesn’t restrict you from working with other platforms or programs. In rare cases where a campaign requires exclusivity, it will be clearly communicated in advance."
+    },
+    {
+      "question": "What happens if I’m not selected?",
+      "answer": "Your application remains active. Some creators are not selected initially but are brought in later based on their growth and consistency. Continue creating and reapplying."
+    },
+    {
+      "question": "Does a referral improve my chances?",
+      "answer": "Yes. A referral signals that an existing member believes you’re a strong fit. While it doesn’t guarantee selection, it is a meaningful factor in our evaluation."
     }
   ],
   "creatorTypes": [
