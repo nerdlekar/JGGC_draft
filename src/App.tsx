@@ -416,8 +416,9 @@ const SignupForm = () => {
     name: '',
     email: '',
     socials: [{ platform: 'youtube', handle: '', contentType: 'reels', reach: '' }],
-    gameFormats: '',
-    willingness: 'yes'
+    selectedGenres: [] as string[],
+    otherGenre: '',
+    agreedToTerms: false
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -426,18 +427,29 @@ const SignupForm = () => {
     setError('');
 
     try {
-      // Paste your Google Apps Script URL here!
-      const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx0FCQXru1dQEaP2dchMAqpx_DBtNctkWZgEGMqTiQwewPAc5p-1vSm0k-hta_T5YB04w/exec';
+      const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby9Nua8qJMR_ygq_z43-agiWTm1oatP4TTz5g3RdxQJ34l20JBTyFsyPTCA_lv4s_Cz/exec';
+
+      // Use URLSearchParams for maximum compatibility with Google Scripts
+      const formDataBody = new URLSearchParams();
+      formDataBody.append('name', formData.name);
+      formDataBody.append('email', formData.email);
+      formDataBody.append('agreedToTerms', formData.agreedToTerms ? 'Yes' : 'No');
+      formDataBody.append('otherGenre', formData.otherGenre);
+      formDataBody.append('selectedGenres', formData.selectedGenres.join(', '));
+      formDataBody.append('timestamp', new Date().toLocaleString());
+
+      const socialsInfo = formData.socials
+        .map(s => `${s.platform.toUpperCase()}: ${s.handle} (${s.reach})`)
+        .join(' | ');
+      formDataBody.append('socials', socialsInfo);
 
       await fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
-        // 'no-cors' is often required for Google Apps Script to prevent CORS blocking,
-        // though it means you can't read the exact response.
-        mode: 'no-cors',
+        mode: 'no-cors', // Important for Google Script
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: JSON.stringify(formData),
+        body: formDataBody.toString(),
       });
 
       setIsLoading(false);
@@ -519,23 +531,23 @@ const SignupForm = () => {
                 </div>
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Full Name</label>
+                    <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Full Name *</label>
                     <input
                       required
                       type="text"
                       className="w-full bg-[#141414] border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors"
-                      placeholder="John Doe"
+                      placeholder="Amit Singh"
                       value={formData.name}
                       onChange={e => setFormData({ ...formData, name: e.target.value })}
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Email Address</label>
+                    <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Email Address *</label>
                     <input
                       required
                       type="email"
                       className="w-full bg-[#141414] border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors"
-                      placeholder="john@example.com"
+                      placeholder="amit@example.com"
                       value={formData.email}
                       onChange={e => setFormData({ ...formData, email: e.target.value })}
                     />
@@ -561,13 +573,6 @@ const SignupForm = () => {
                 <div className="space-y-4">
                   <div className="flex items-center justify-between border-t border-white/10 pt-6">
                     <label className="text-sm font-black uppercase italic tracking-widest text-white">Social Handles & Metrics</label>
-                    <button
-                      type="button"
-                      onClick={() => setFormData({ ...formData, socials: [...formData.socials, { platform: 'youtube', handle: '', contentType: 'reels', reach: '' }] })}
-                      className="text-xs text-brand font-bold uppercase tracking-widest hover:text-white flex items-center gap-1 transition-colors"
-                    >
-                      <Plus className="w-3 h-3" /> Add Another Platform
-                    </button>
                   </div>
                   <div className="space-y-6 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
                     {formData.socials.map((social, index) => (
@@ -588,7 +593,7 @@ const SignupForm = () => {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                           <div className="space-y-3">
-                            <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Platform</label>
+                            <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Platform *</label>
                             <div className="relative">
                               <select
                                 className="w-full bg-dark-green/50 border border-white/10 rounded-xl pl-5 pr-12 py-4 focus:border-brand outline-none transition-colors appearance-none"
@@ -610,7 +615,7 @@ const SignupForm = () => {
                           </div>
 
                           <div className="space-y-3">
-                            <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Handle / Link</label>
+                            <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Handle / Link *</label>
                             <input
                               required
                               type="text"
@@ -626,7 +631,7 @@ const SignupForm = () => {
                           </div>
 
                           <div className="space-y-3">
-                            <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Content Type</label>
+                            <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Content Type *</label>
                             <div className="relative">
                               <select
                                 className="w-full bg-dark-green/50 border border-white/10 rounded-xl pl-5 pr-12 py-4 focus:border-brand outline-none transition-colors appearance-none"
@@ -648,7 +653,7 @@ const SignupForm = () => {
                           </div>
 
                           <div className="space-y-3">
-                            <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Total Reach/Subs</label>
+                            <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Total Reach/Subs *</label>
                             <input
                               required
                               type="text"
@@ -665,6 +670,14 @@ const SignupForm = () => {
                         </div>
                       </div>
                     ))}
+
+                    <button
+                      type="button"
+                      onClick={() => setFormData({ ...formData, socials: [...formData.socials, { platform: 'youtube', handle: '', contentType: 'reels', reach: '' }] })}
+                      className="w-full py-4 border-2 border-dashed border-white/10 rounded-2xl text-xs text-muted-text font-bold uppercase tracking-widest hover:border-brand/50 hover:text-brand transition-all flex items-center justify-center gap-2"
+                    >
+                      <Plus className="w-4 h-4" /> Add Another Platform
+                    </button>
                   </div>
                 </div>
                 <div className="flex gap-4">
@@ -695,38 +708,54 @@ const SignupForm = () => {
                 </div>
 
                 <div className="space-y-6">
-                  <div className="space-y-2 border-t border-white/10 pt-6">
-                    <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Game Formats You Create For</label>
-                    <input
-                      required
-                      type="text"
-                      className="w-full bg-[#141414] border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors"
-                      placeholder="FPS, RPG, MOBA, etc."
-                      value={formData.gameFormats}
-                      onChange={e => setFormData({ ...formData, gameFormats: e.target.value })}
-                    />
-                  </div>
-
-                  <div className="space-y-4">
-                    <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Willing to participate in campaigns?</label>
-                    <div className="flex gap-4 flex-wrap">
-                      {['yes', 'maybe', 'only remote', 'it depends'].map(opt => (
-                        <label key={opt} className="flex items-center gap-2 cursor-pointer group">
+                  <div className="space-y-4 border-t border-white/10 pt-6">
+                    <label className="text-xs font-bold uppercase tracking-widest text-muted-text block mb-2">Game Genres You Create For * (Select at least one)</label>
+                    <div className="grid grid-cols-2 gap-3">
+                      {['FPS', 'MOBA', 'RPG', 'Esports', 'Casual', 'Other'].map(genre => (
+                        <label key={genre} className="flex items-center gap-3 bg-white/5 border border-white/10 p-3 rounded-xl cursor-pointer hover:border-brand/50 transition-colors group">
                           <input
-                            type="radio"
-                            name="willingness"
-                            value={opt}
-                            checked={formData.willingness === opt}
-                            onChange={e => setFormData({ ...formData, willingness: e.target.value })}
-                            className="hidden"
+                            type="checkbox"
+                            className="w-4 h-4 accent-brand cursor-pointer"
+                            checked={formData.selectedGenres.includes(genre)}
+                            onChange={e => {
+                              const newGenres = e.target.checked
+                                ? [...formData.selectedGenres, genre]
+                                : formData.selectedGenres.filter(g => g !== genre);
+                              setFormData({ ...formData, selectedGenres: newGenres });
+                            }}
                           />
-                          <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${formData.willingness === opt ? 'border-brand' : 'border-white/20'}`}>
-                            {formData.willingness === opt && <div className="w-2.5 h-2.5 bg-brand rounded-full" />}
-                          </div>
-                          <span className={`capitalize ${formData.willingness === opt ? 'text-white' : 'text-muted-text'}`}>{opt}</span>
+                          <span className={`text-sm font-bold uppercase tracking-wider transition-colors ${formData.selectedGenres.includes(genre) ? 'text-brand' : 'text-muted-text group-hover:text-white'}`}>
+                            {genre}
+                          </span>
                         </label>
                       ))}
                     </div>
+
+                    {formData.selectedGenres.includes('Other') && (
+                      <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="pt-2">
+                        <input
+                          required
+                          type="text"
+                          className="w-full bg-[#141414] border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors"
+                          placeholder="Tell us what you play"
+                          value={formData.otherGenre}
+                          onChange={e => setFormData({ ...formData, otherGenre: e.target.value })}
+                        />
+                      </motion.div>
+                    )}
+                  </div>
+
+                  <div className="flex items-start gap-4 pt-4 px-1">
+                    <input
+                      required
+                      type="checkbox"
+                      checked={formData.agreedToTerms}
+                      onChange={e => setFormData({ ...formData, agreedToTerms: e.target.checked })}
+                      className="h-5 w-5 mt-0.5 cursor-pointer accent-brand shrink-0"
+                    />
+                    <span className="text-sm text-muted-text select-none leading-tight">
+                      I agree to be contacted by JioGames for campaigns, opportunities, and creator network updates.
+                    </span>
                   </div>
                 </div>
 
@@ -743,8 +772,8 @@ const SignupForm = () => {
                     </button>
                     <button
                       type="submit"
-                      disabled={isLoading}
-                      className="flex-[2] bg-brand text-black py-3 rounded-xl font-black uppercase tracking-widest hover:bg-white transition-colors group flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+                      disabled={isLoading || !formData.agreedToTerms || formData.selectedGenres.length === 0}
+                      className="flex-[2] bg-brand text-black py-3 rounded-xl font-black uppercase tracking-widest hover:bg-white transition-colors group flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:grayscale"
                     >
                       {isLoading ? 'Submitting...' : 'Submit Application'}
                       {!isLoading && <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
