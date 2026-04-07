@@ -47,6 +47,25 @@ interface FAQItem {
 
 import contentData from './content.json';
 
+// --- Brand Icons (Custom SVG) ---
+const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
+
+const DiscordIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 127.14 96.36" fill="currentColor" {...props}>
+    <path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.71,32.65-1.82,56.6.39,80.21a105.73,105.73,0,0,0,32.77,16.15,77.7,77.7,0,0,0,7.32-11.75A67.11,67.11,0,0,1,29.58,79.4c1,1.06,2.06,2.15,3.06,3.27,1,1.12,2,2.27,3,3.46,1,1.12,2,2.41,3.06,3.67H91.54l3.06-3.67q1.5-1.78,3-3.46t3.06-3.27a67.11,67.11,0,0,1-10.9-5.21,77.7,77.7,0,0,0,7.32,11.75,105.73,105.73,0,0,0,32.77-16.15C129,56.6,124.43,32.65,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53.2s5.18-12.49,11.45-12.49,11.45,5.6,11.45,12.49S48.72,65.69,42.45,65.69Zm42.24,0C78.42,65.69,73.24,60,73.24,53.2s5.18-12.49,11.45-12.49,11.45,5.6,11.45,12.49S88.42,65.69,84.69,65.69Z" />
+  </svg>
+);
+
+const RedditIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 20 20" fill="currentColor" {...props}>
+    <path d="M16.5 7.5a1.5 1.5 0 1 0 1.5 1.5 1.5 1.5 0 0 0-1.5-1.5zm-9 0a1.5 1.5 0 1 0 1.5 1.5 1.5 1.5 0 0 0-1.5-1.5zm3.75 6.5s-1.5 1.5-3.75 1.5c-2.25 0-3.75-1.5-3.75-1.5s0-.75.75-.75.75.75.75.75c1.5 0 2.25-.75 2.25-.75h.75s.75.75 2.25.75c0 0 .75-.75.75-.75s.75.75.75.75zM10 0C4.477 0 0 4.477 0 10c0 5.523 4.477 10 10 10s10-4.477 10-10c0-5.523-4.477-10-10-10zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z" />
+  </svg>
+);
+
 const IconMap: Record<string, React.ElementType> = {
   Trophy,
   Zap,
@@ -57,7 +76,10 @@ const IconMap: Record<string, React.ElementType> = {
   Twitter,
   Instagram,
   Youtube,
-  Smartphone
+  Smartphone,
+  X: XIcon,
+  Reddit: RedditIcon,
+  Discord: DiscordIcon
 };
 
 const FEATURES: Feature[] = contentData.features.map(f => {
@@ -127,7 +149,7 @@ const Navbar = () => (
       </div>
       <button
         onClick={() => document.getElementById('signup')?.scrollIntoView({ behavior: 'smooth' })}
-        className="bg-complement text-black px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-wider hover:bg-brand hover:text-white transition-all"
+        className="bg-brand text-black px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-wider hover:bg-white hover:scale-105 transition-all shadow-[0_0_20px_rgba(20,184,102,0.3)] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
       >
         Apply Now
       </button>
@@ -439,7 +461,7 @@ const SignupForm = () => {
         </div>
         <h3 className="text-3xl font-bold mb-4 italic uppercase">Application Received!</h3>
         <p className="text-muted-text max-w-md mx-auto">
-          Our team will review your profile and get back to you within 48 hours. Get ready to change the game.
+          We will review your form submission and reach out shortly. Get ready to change the game.
         </p>
         <button
           onClick={() => setIsSubmitted(false)}
@@ -751,10 +773,16 @@ const Footer = () => (
           </p>
           <div className="flex flex-wrap gap-4 mb-8">
             {SOCIAL_HANDLES.map((social, idx) => {
-              const Icon = IconMap[social.icon] || Globe;
+              const isImageUrl = social.icon.startsWith('/') || social.icon.startsWith('http');
+              const Icon = !isImageUrl ? (IconMap[social.icon] || Globe) : null;
+
               return (
-                <a key={idx} href={social.url} target="_blank" rel="noreferrer" className="p-2.5 bg-[#27b376] rounded-full text-white hover:opacity-80 transition-opacity">
-                  <Icon className="w-5 h-5" />
+                <a key={idx} href={social.url} target="_blank" rel="noreferrer" className="w-10 h-10 bg-[#27b376] rounded-full text-white hover:opacity-80 transition-opacity flex items-center justify-center p-1">
+                  {isImageUrl ? (
+                    <img src={social.icon} alt={social.platform} className="w-full h-full object-contain" />
+                  ) : (
+                    Icon && <Icon className="w-full h-full" />
+                  )}
                 </a>
               );
             })}
@@ -779,7 +807,7 @@ const Footer = () => (
             <ul className="space-y-4 text-sm text-muted-text">
               {column.links.map((link, j) => (
                 <li key={j}>
-                  <a href={link.url} className="hover:text-white transition-colors">{link.label}</a>
+                  <a href={link.url} target="_blank" rel="noreferrer" className="hover:text-white transition-colors">{link.label}</a>
                 </li>
               ))}
             </ul>
@@ -790,8 +818,8 @@ const Footer = () => (
       <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-text uppercase tracking-widest">
         <p>© 2026 JioGames Creator Network. All rights reserved.</p>
         <div className="flex gap-8">
-          <a href="#" className="hover:text-white transition-colors">Support</a>
-          <a href="#" className="hover:text-white transition-colors">Contact</a>
+          <a href="#faq" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">Support</a>
+          <a href="#signup" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">Contact</a>
         </div>
       </div>
     </div>
@@ -848,8 +876,8 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="inline-flex items-center gap-3 bg-brand text-black px-8 py-4 rounded-full text-sm font-black uppercase tracking-[0.2em] mb-8 shadow-[0_0_30px_rgba(20,184,102,0.5)] transform hover:scale-105 transition-all">
-              <Zap className="w-5 h-5 text-black animate-pulse" />
+            <div className="inline-flex items-center gap-3 bg-brand/10 border border-brand/30 text-brand px-6 py-2 rounded-full text-xs font-bold uppercase tracking-[0.2em] mb-8 shadow-[0_0_20px_rgba(20,184,102,0.1)]">
+              <div className="w-1.5 h-1.5 bg-brand rounded-full animate-pulse" />
               Now Accepting Applications
             </div>
             <div className="flex justify-center mb-6">
@@ -860,7 +888,7 @@ export default function App() {
               <span className="text-brand">Network.</span>
             </h1>
             <p className="text-lg md:text-2xl text-muted-text max-w-2xl mx-auto mb-12 font-medium">
-              Creator Network is how JioGames discovers, supports and activates creators across formats, Get access to opportunities, drops, campaigns, events and collaboration as we scale a creator engine for JioGames now, and Jio next.
+              Creator Network is how JioGames discovers, supports and activates creators across formats, Get access to opportunities, drops, campaigns, events and collaboration as we build a creator engine for JioGames.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
               <button
@@ -896,9 +924,7 @@ export default function App() {
                 We don't just connect you to brands. We build your legacy through high-impact activations.
               </p>
             </div>
-            <div className="hidden md:block text-right">
-              <div className="text-4xl font-black italic text-white/10 uppercase">Elite Network</div>
-            </div>
+
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

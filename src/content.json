@@ -3,14 +3,14 @@
     {
       "id": "opportunities",
       "title": "Access to Opportunities",
-      "description": "Get direct access to exclusive brand deals and sponsorship opportunities tailored to your niche.",
+      "description": "Get direct access to exclusive brand deals and opportunities tailored to your niche.",
       "icon": "Trophy",
       "image": "images/players.avif"
     },
     {
       "id": "campaigns",
       "title": "Campaigns and Drops",
-      "description": "Participate in high-impact UGC campaigns and limited-edition product drops.",
+      "description": "Participate in high-impact UGC campaigns and limited-edition drops.",
       "icon": "Zap",
       "image": "images/controller.jpeg"
     },
@@ -24,7 +24,7 @@
     {
       "id": "events",
       "title": "Events and Tournaments",
-      "description": "Compete in exclusive tournaments and attend VIP industry events worldwide.",
+      "description": "Compete in exclusive tournaments and attend invite only events.",
       "icon": "Gamepad2",
       "image": "images/tourn.webp"
     },
@@ -39,19 +39,19 @@
   "faqs": [
     {
       "question": "What is the JioGames Creator Network?",
-      "answer": "JioGames Creator Network is a premier platform designed to bridge the gap between elite gaming creators and world-class brands for UGC campaigns and partnerships."
+      "answer": "JioGames Creator Network is a premier platform designed to bridge the gap between ambitious gaming creators and world-class brands for UGC campaigns and partnerships."
     },
     {
       "question": "How do I qualify for the network?",
-      "answer": "We look for creators with high engagement, consistent quality, and a strong presence in the gaming community. Every application is manually vetted by our team."
+      "answer": "We look for creators who bring genuine passion, consistent quality, and a meaningful presence in the gaming community. It’s not about your numbers—it’s about your drive, creativity, and commitment. Every application is carefully reviewed by our team with that in mind."
     },
     {
       "question": "Is this only for gaming creators?",
-      "answer": "Yes—for now. The Creator Network is launching as a gaming-first program."
+      "answer": "Yes. The Creator Network is launching as a gaming-first program."
     },
     {
       "question": "Which platforms are eligible?",
-      "answer": "All major platforms qualify—YouTube, Instagram, Twitch, Facebook. If you consistently create gaming content on any platform, you can apply."
+      "answer": "All major platforms qualify, YouTube, Instagram, X, Twitch, Facebook, Reddit and Discord. If you consistently create gaming content on any platform, you can apply."
     },
     {
       "question": "Is this a paid program?",
@@ -73,22 +73,22 @@
   "creatorTypes": [
     {
       "title": "Gameplay Creators",
-      "description": "Livestreams, walkthroughs, highlights, challenges, clips.",
+      "description": "Livestreams, Walkthroughs, Highlights, Challenges, Clips.",
       "image": "/images/creator.png"
     },
     {
       "title": "Short-form",
-      "description": "Reels/Shorts, edits, hooks, reactions, memes.",
+      "description": "Reels/Shorts, Edits, Hooks, Reactions, Memes.",
       "image": "/images/reels.jpeg"
     },
     {
       "title": "Esports",
-      "description": "Competitive players, hosts, analysts, tournament/event coverage.",
+      "description": "Competitive Players, Hosts, Analysts, Tournament/event coverage.",
       "image": "/images/esports.png"
     },
     {
       "title": "Fan Creators",
-      "description": "Art, Cosplayers, UGC concepts, community Builds.",
+      "description": "Art, Cosplayers, UGC concepts, Community Builds.",
       "image": "/images/cosplay.png"
     }
   ],
@@ -111,7 +111,7 @@
     {
       "number": "04",
       "title": "Scale",
-      "description": "We turn what works into a repeatable creator engines for JioGames now, and Jio next."
+      "description": "We turn what works into a repeatable creator engines for JioGames."
     }
   ],
   "footerColumns": [
@@ -221,22 +221,32 @@
     {
       "platform": "Facebook",
       "url": "https://facebook.com/jiogames",
-      "icon": "Facebook"
+      "icon": "https://jiogames.com/assets/footer/facebook.svg"
     },
     {
       "platform": "X",
       "url": "https://x.com/jiogames",
-      "icon": "Twitter"
+      "icon": "https://jiogames.com/assets/footer/twitter.svg"
     },
     {
       "platform": "Instagram",
       "url": "https://instagram.com/jiogames",
-      "icon": "Instagram"
+      "icon": "https://jiogames.com/assets/footer/Instagramlogo.svg"
     },
     {
       "platform": "YouTube",
       "url": "https://youtube.com/jiogames",
-      "icon": "Youtube"
+      "icon": "http://jiogames.com/assets/footer/YoutubeLogo.svg"
+    },
+    {
+      "platform": "Reddit",
+      "url": "https://www.reddit.com/r/JioGames_Official/",
+      "icon": "https://jiogames.com/assets/footer/reddit.png"
+    },
+    {
+      "platform": "Discord",
+      "url": "https://discord.com/invite/vGzjx7uc4u",
+      "icon": "https://jiogames.com/assets/footer/discord.png"
     }
   ],
   "appLinks": [
