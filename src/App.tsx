@@ -16,6 +16,7 @@ import {
   Minus,
   X,
   CheckCircle2,
+  AlertCircle,
   Instagram,
   Twitter,
   Youtube,
@@ -412,10 +413,36 @@ const SignupForm = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [localError, setLocalError] = useState('');
+  const isValidEmail = (email: string) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+
+  const validateStep1 = () => {
+    if (!formData.name.trim()) return "Please enter your full name.";
+    if (!formData.email.trim()) return "Please enter your email address.";
+    if (!isValidEmail(formData.email)) return "Please enter a valid email address.";
+    return null;
+  };
+
+  const validateStep2 = () => {
+    const missingFields = formData.socials.some(s => !s.handle.trim() || !s.reach.trim());
+    if (missingFields) return "Please provide both handle and reach for all your platforms.";
+    return null;
+  };
+
+  const isFormValid = () => {
+    const isStep1Valid = !validateStep1();
+    const isStep2Valid = !validateStep2();
+    const isStep3Valid = formData.selectedGenres.length > 0 &&
+      (!formData.selectedGenres.includes('Other') || formData.otherGenre.trim() !== '') &&
+      formData.agreedToTerms;
+
+    return isStep1Valid && isStep2Valid && isStep3Valid;
+  };
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    socials: [{ platform: 'youtube', handle: '', contentType: 'reels', reach: '' }],
+    socials: [{ platform: 'instagram', handle: '', contentType: 'reels', reach: '' }],
     selectedGenres: [] as string[],
     otherGenre: '',
     agreedToTerms: false
@@ -543,20 +570,55 @@ const SignupForm = () => {
                   </div>
                   <div className="space-y-2">
                     <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Email Address *</label>
-                    <input
-                      required
-                      type="email"
-                      className="w-full bg-[#141414] border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors"
-                      placeholder="amit@example.com"
-                      value={formData.email}
-                      onChange={e => setFormData({ ...formData, email: e.target.value })}
-                    />
+                    <div className="relative">
+                      <input
+                        required
+                        type="email"
+                        className={`w-full bg-[#141414] border rounded-xl px-4 py-3 outline-none transition-all ${formData.email && !isValidEmail(formData.email)
+                          ? 'border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.1)]'
+                          : formData.email && isValidEmail(formData.email)
+                            ? 'border-brand shadow-[0_0_10px_rgba(20,184,102,0.1)]'
+                            : 'border-white/10 focus:border-brand'
+                          }`}
+                        placeholder="amit@example.com"
+                        value={formData.email}
+                        onChange={e => {
+                          setFormData({ ...formData, email: e.target.value });
+                          setLocalError('');
+                        }}
+                      />
+                      {formData.email && (
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2">
+                          {isValidEmail(formData.email) ? (
+                            <CheckCircle2 className="w-5 h-5 text-brand" />
+                          ) : (
+                            <AlertCircle className="w-5 h-5 text-red-500" />
+                          )}
+                        </div>
+                      )}
+                    </div>
+                    {formData.email && !isValidEmail(formData.email) && (
+                      <p className="text-[10px] text-red-500 font-bold uppercase tracking-widest mt-1 ml-1">Please enter a valid email format</p>
+                    )}
                   </div>
                 </div>
+                {localError && step === 1 && (
+                  <motion.p initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-red-500 text-xs font-bold italic">{localError}</motion.p>
+                )}
                 <button
                   type="button"
-                  onClick={() => setStep(2)}
-                  className="w-full bg-white/5 border border-white/10 text-white py-3 rounded-xl font-black uppercase tracking-widest hover:bg-white hover:text-black transition-colors flex items-center justify-center gap-2"
+                  onClick={() => {
+                    const err = validateStep1();
+                    if (err) setLocalError(err);
+                    else {
+                      setLocalError('');
+                      setStep(2);
+                    }
+                  }}
+                  className={`w-full py-3 rounded-xl font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${!validateStep1()
+                    ? 'bg-brand text-black hover:bg-white hover:scale-[1.02]'
+                    : 'bg-white/5 border border-white/10 text-white/50 hover:border-white/20'
+                    }`}
                 >
                   Next Step <ArrowRight className="w-5 h-5" />
                 </button>
@@ -653,7 +715,7 @@ const SignupForm = () => {
                           </div>
 
                           <div className="space-y-3">
-                            <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Total Reach/Subs *</label>
+                            <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Total Followers/Subs *</label>
                             <input
                               required
                               type="text"
@@ -673,25 +735,41 @@ const SignupForm = () => {
 
                     <button
                       type="button"
-                      onClick={() => setFormData({ ...formData, socials: [...formData.socials, { platform: 'youtube', handle: '', contentType: 'reels', reach: '' }] })}
+                      onClick={() => setFormData({ ...formData, socials: [...formData.socials, { platform: 'instagram', handle: '', contentType: 'reels', reach: '' }] })}
                       className="w-full py-4 border-2 border-dashed border-white/10 rounded-2xl text-xs text-muted-text font-bold uppercase tracking-widest hover:border-brand/50 hover:text-brand transition-all flex items-center justify-center gap-2"
                     >
                       <Plus className="w-4 h-4" /> Add Another Platform
                     </button>
                   </div>
                 </div>
+                {localError && step === 2 && (
+                  <motion.p initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-red-500 text-xs font-bold italic">{localError}</motion.p>
+                )}
                 <div className="flex gap-4">
                   <button
                     type="button"
-                    onClick={() => setStep(1)}
+                    onClick={() => {
+                      setLocalError('');
+                      setStep(1);
+                    }}
                     className="flex-1 bg-transparent border border-white/10 text-white py-3 rounded-xl font-bold uppercase tracking-widest hover:border-white/30 transition-colors"
                   >
                     Back
                   </button>
                   <button
                     type="button"
-                    onClick={() => setStep(3)}
-                    className="flex-[2] bg-white/5 border border-white/10 text-white py-3 rounded-xl font-black uppercase tracking-widest hover:bg-white hover:text-black transition-colors flex items-center justify-center gap-2"
+                    onClick={() => {
+                      const err = validateStep2();
+                      if (err) setLocalError(err);
+                      else {
+                        setLocalError('');
+                        setStep(3);
+                      }
+                    }}
+                    className={`flex-[2] py-3 rounded-xl font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${!validateStep2()
+                      ? 'bg-brand text-black hover:bg-white hover:scale-[1.02]'
+                      : 'bg-white/5 border border-white/10 text-white/50 hover:border-white/20'
+                      }`}
                   >
                     Next Step <ArrowRight className="w-5 h-5" />
                   </button>
@@ -772,7 +850,7 @@ const SignupForm = () => {
                     </button>
                     <button
                       type="submit"
-                      disabled={isLoading || !formData.agreedToTerms || formData.selectedGenres.length === 0}
+                      disabled={isLoading || !isFormValid()}
                       className="flex-[2] bg-brand text-black py-3 rounded-xl font-black uppercase tracking-widest hover:bg-white transition-colors group flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:grayscale"
                     >
                       {isLoading ? 'Submitting...' : 'Submit Application'}
