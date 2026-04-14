@@ -287,10 +287,13 @@ const CreatorTypesSection = () => (
               <img
                 src={type.image}
                 alt={type.title}
-                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 opacity-40 group-hover:opacity-60"
+                className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 opacity-40 group-hover:opacity-20"
                 referrerPolicy="no-referrer"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent opacity-80" />
+              {/* Permanent Gradient Bottom */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-90" />
+              {/* Hover Overlay */}
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
             </div>
 
             {/* Content Overlay */}
@@ -299,7 +302,7 @@ const CreatorTypesSection = () => (
                 <h3 className="text-2xl font-black italic uppercase tracking-tighter mb-3 leading-none group-hover:text-brand transition-colors duration-500">
                   {type.title}
                 </h3>
-                <ul className="text-muted-text font-bold leading-relaxed text-lg opacity-0 group-hover:opacity-100 transition-all duration-500 max-h-0 group-hover:max-h-32 overflow-hidden list-disc list-inside space-y-1">
+                <ul className="text-white/90 font-medium leading-relaxed text-lg opacity-0 group-hover:opacity-100 transition-all duration-500 max-h-0 group-hover:max-h-32 overflow-hidden list-disc list-inside space-y-1">
                   {type.description.split(',').map((item, idx) => (
                     <li key={idx}>{item.trim().replace(/\.$/, '')}</li>
                   ))}
@@ -445,6 +448,7 @@ const SignupForm = () => {
     socials: [{ platform: 'instagram', handle: '', contentType: 'reels', reach: '' }],
     selectedGenres: [] as string[],
     otherGenre: '',
+    referredBy: '',
     agreedToTerms: false
   });
 
@@ -454,7 +458,7 @@ const SignupForm = () => {
     setError('');
 
     try {
-      const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby9Nua8qJMR_ygq_z43-agiWTm1oatP4TTz5g3RdxQJ34l20JBTyFsyPTCA_lv4s_Cz/exec';
+      const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwMKj-o42RzWXg4bHCTYVY7hl4ndfObQ9ZGKTNYRWgWwX6fHyPk8lE3Qb-6cc3spaYv/exec';
 
       // Use URLSearchParams for maximum compatibility with Google Scripts
       const formDataBody = new URLSearchParams();
@@ -462,6 +466,7 @@ const SignupForm = () => {
       formDataBody.append('email', formData.email);
       formDataBody.append('agreedToTerms', formData.agreedToTerms ? 'Yes' : 'No');
       formDataBody.append('otherGenre', formData.otherGenre);
+      formDataBody.append('referredBy', formData.referredBy);
       formDataBody.append('selectedGenres', formData.selectedGenres.join(', '));
       formDataBody.append('timestamp', new Date().toLocaleString());
 
@@ -528,10 +533,10 @@ const SignupForm = () => {
             </p>
             <ul className="space-y-4">
               {[
-                'Direct access to premium brands',
-                'Exclusive invite-only events',
-                'Dedicated creator support',
-                'Performance-based bonuses'
+                'Direct access to premium content',
+                'Exclusive invite-only access',
+                'Dedicated creator events',
+                'Performance-based perks'
               ].map((item, i) => (
                 <li key={i} className="flex items-center gap-3 text-muted-text">
                   <CheckCircle2 className="w-5 h-5 text-brand" />
@@ -563,7 +568,7 @@ const SignupForm = () => {
                       required
                       type="text"
                       className="w-full bg-[#141414] border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors"
-                      placeholder="Amit Singh"
+                      placeholder="Rahul Sharma"
                       value={formData.name}
                       onChange={e => setFormData({ ...formData, name: e.target.value })}
                     />
@@ -669,7 +674,7 @@ const SignupForm = () => {
                                 <option value="youtube">YouTube</option>
                                 <option value="instagram">Instagram</option>
                                 <option value="twitch">Twitch</option>
-                                <option value="tiktok">TikTok</option>
+                                <option value="facebook">Facebook</option>
                                 <option value="twitter">X / Twitter</option>
                               </select>
                               <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-text pointer-events-none" />
@@ -823,6 +828,17 @@ const SignupForm = () => {
                     )}
                   </div>
 
+                  <div className="space-y-4 border-t border-white/10 pt-6">
+                    <label className="text-xs font-bold uppercase tracking-widest text-muted-text block mb-2">Referred By</label>
+                    <input
+                      type="text"
+                      className="w-full bg-dark-green/50 border border-white/10 rounded-xl px-5 py-4 focus:border-brand outline-none transition-colors"
+                      placeholder="E.g. Friend, Social Media, etc."
+                      value={formData.referredBy}
+                      onChange={e => setFormData({ ...formData, referredBy: e.target.value })}
+                    />
+                  </div>
+
                   <div className="flex items-start gap-4 pt-4 px-1">
                     <input
                       required
@@ -876,7 +892,7 @@ const Footer = () => (
             <img src="/images/Jiogames_horizontal.svg" alt="JioGames" className="h-8 object-contain" />
           </div>
           <p className="text-muted-text max-w-xs mb-8">
-            The ultimate creator intake and activation layer for the next generation of gaming partnerships.
+            Fueling India’s next generation of gaming creators and partnerships.
           </p>
           <div className="flex flex-wrap gap-4 mb-8">
             {SOCIAL_HANDLES.map((social, idx) => {
@@ -1028,7 +1044,7 @@ export default function App() {
                 Creator <span className="text-brand">Perks.</span>
               </h2>
               <p className="text-xl text-muted-text">
-                We don't just connect you to brands. We build your legacy through high-impact activations.
+                We create pathways for you to grow, get noticed, and build momentum through high-impact activations.
               </p>
             </div>
 
@@ -1051,7 +1067,7 @@ export default function App() {
         <div className="flex whitespace-nowrap">
           <div className="flex gap-20 animate-marquee items-center">
             {[
-              'UGC CAMPAIGNS', 'GLOBAL PARTNERSHIPS', 'EXCLUSIVE DROPS', 'EARLY ACCESS', 'TOURNAMENTS', 'COMMUNITY VISIBILITY'
+              'UGC CAMPAIGNS', 'PARTNERSHIPS', 'EXCLUSIVE DROPS', 'EARLY ACCESS', 'TOURNAMENTS', 'COMMUNITY VISIBILITY'
             ].map((text, i) => (
               <div key={i} className="flex items-center gap-4">
                 <Star className="w-6 h-6 text-brand fill-brand" />

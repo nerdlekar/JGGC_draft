@@ -55,7 +55,7 @@
     },
     {
       "question": "Is this a paid program?",
-      "answer": "It’s free to apply and participate. The Creator Network is designed to support creators. Members gain access to monetisation opportunities and partnered benefits."
+      "answer": "It’s free to apply and participate. The Creator Network is designed to support creators. Members gain access to collaboration opportunities and partnered benefits."
     },
     {
       "question": "Can I join if I’m part of other creator programs?",
@@ -258,5 +258,17 @@
       "platform": "App Store",
       "url": "https://apps.apple.com/in/app/jiogames-play-cloud-games/id1574760422"
     }
+  ],
+  "referralOptions": [
+    "None",
+    "Bulletthekrazygamer",
+    "Zitrakz Gaming",
+    "Sly Singh",
+    "Cyano",
+    "AFKushh",
+    "Renegade",
+    "Prashant Plays",
+    "NyaraMeow",
+    "Gigigonemad"
   ]
 }
