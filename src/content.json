@@ -19,7 +19,7 @@
       "title": "Early Access",
       "description": "Be the first to play new titles and test upcoming features before they hit the mainstream.",
       "icon": "Star",
-      "image": "/images/earlyaccess.jpg"
+      "image": "images/earlyaccess.jpg"
     },
     {
       "id": "events",
@@ -74,22 +74,22 @@
     {
       "title": "Gameplay Creators",
       "description": "Livestreams, Walkthroughs, Highlights, Challenges, Clips.",
-      "image": "/images/creator.png"
+      "image": "images/creator.png"
     },
     {
       "title": "Short-form",
       "description": "Reels/Shorts, Edits, Hooks, Reactions, Memes.",
-      "image": "/images/reels.jpeg"
+      "image": "images/reels.jpeg"
     },
     {
       "title": "Esports",
       "description": "Competitive Players, Hosts, Analysts, Tournament/event coverage.",
-      "image": "/images/esports.png"
+      "image": "images/esports.png"
     },
     {
       "title": "Fan Creators",
       "description": "Art, Cosplayers, UGC concepts, Community Builds.",
-      "image": "/images/cosplay.png"
+      "image": "images/cosplay.png"
     }
   ],
   "steps": [
