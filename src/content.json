@@ -39,7 +39,7 @@
   "faqs": [
     {
       "question": "What is the JioGames Creator Network?",
-      "answer": "JioGames Creator Network is a premier platform designed to bridge the gap between ambitious gaming creators and world-class brands for UGC campaigns and partnerships."
+      "answer": "JioGames Creator Network is a premier platform designed to bridge the gap between ambitious gaming creators and world-class brands for UGC campaigns and collaborations."
     },
     {
       "question": "How do I qualify for the network?",
@@ -47,7 +47,7 @@
     },
     {
       "question": "Is this only for gaming creators?",
-      "answer": "Yes. The Creator Network is launching as a gaming-first program."
+      "answer": "Yes. The Creator Network is launching as a 'gamer first' program."
     },
     {
       "question": "Which platforms are eligible?",
@@ -132,7 +132,7 @@
       "title": "Gaming Zone",
       "links": [
         {
-          "label": "Cloud Gaming",
+          "label": "Cloudaming",
           "url": "https://jiogames.com/"
         },
         {
