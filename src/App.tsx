@@ -140,7 +140,7 @@ const Navbar = () => (
   <nav className="fixed top-0 left-0 right-0 z-50 bg-[#141414]/80 backdrop-blur-md border-b border-white/10">
     <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
       <div className="flex items-center z-50">
-        <img src="/images/Jiogames_horizontal.svg" alt="JioGames" className="h-8 md:h-10 object-contain" />
+        <img src="images/Jiogames_horizontal.svg" alt="JioGames" className="h-8 md:h-10 object-contain" />
       </div>
       <div className="hidden md:flex items-center gap-8 text-sm font-medium uppercase tracking-widest text-muted-text">
         <a href="#how-it-works" className="hover:text-brand transition-colors">How it works</a>
@@ -889,7 +889,7 @@ const Footer = () => (
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-12 mb-20">
         <div className="col-span-2">
           <div className="flex items-center mb-6">
-            <img src="/images/Jiogames_horizontal.svg" alt="JioGames" className="h-8 object-contain" />
+            <img src="images/Jiogames_horizontal.svg" alt="JioGames" className="h-8 object-contain" />
           </div>
           <p className="text-muted-text max-w-xs mb-8">
             Fueling India’s next generation of gaming creators and partnerships.
@@ -1004,7 +1004,7 @@ export default function App() {
               Now Accepting Applications
             </div>
             <div className="flex justify-center mb-6">
-              <img src="/images/Jiogames_horizontal.svg" alt="JioGames" className="h-12 md:h-20 object-contain" />
+              <img src="images/Jiogames_horizontal.svg" alt="JioGames" className="h-12 md:h-20 object-contain" />
             </div>
             <h1 className="text-[12vw] md:text-[8vw] font-black italic uppercase leading-[0.85] tracking-tighter mb-8">
               Creator <br />
