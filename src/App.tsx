@@ -412,472 +412,55 @@ const HowItWorksSection = () => {
 };
 
 const SignupForm = () => {
-  const [step, setStep] = useState(1);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [localError, setLocalError] = useState('');
-  const isValidEmail = (email: string) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
-
-  const validateStep1 = () => {
-    if (!formData.name.trim()) return "Please enter your full name.";
-    if (!formData.email.trim()) return "Please enter your email address.";
-    if (!isValidEmail(formData.email)) return "Please enter a valid email address.";
-    return null;
-  };
-
-  const validateStep2 = () => {
-    const missingFields = formData.socials.some(s => !s.handle.trim() || !s.reach.trim());
-    if (missingFields) return "Please provide both handle and reach for all your platforms.";
-    return null;
-  };
-
-  const isFormValid = () => {
-    const isStep1Valid = !validateStep1();
-    const isStep2Valid = !validateStep2();
-    const isStep3Valid = formData.selectedGenres.length > 0 &&
-      (!formData.selectedGenres.includes('Other') || formData.otherGenre.trim() !== '') &&
-      formData.agreedToTerms;
-
-    return isStep1Valid && isStep2Valid && isStep3Valid;
-  };
-
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    socials: [{ platform: 'instagram', handle: '', contentType: 'reels', reach: '' }],
-    selectedGenres: [] as string[],
-    otherGenre: '',
-    referredBy: '',
-    agreedToTerms: false
-  });
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError('');
-
-    try {
-      const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwMKj-o42RzWXg4bHCTYVY7hl4ndfObQ9ZGKTNYRWgWwX6fHyPk8lE3Qb-6cc3spaYv/exec';
-
-      // Use URLSearchParams for maximum compatibility with Google Scripts
-      const formDataBody = new URLSearchParams();
-      formDataBody.append('name', formData.name);
-      formDataBody.append('email', formData.email);
-      formDataBody.append('agreedToTerms', formData.agreedToTerms ? 'Yes' : 'No');
-      formDataBody.append('otherGenre', formData.otherGenre);
-      formDataBody.append('referredBy', formData.referredBy);
-      formDataBody.append('selectedGenres', formData.selectedGenres.join(', '));
-      formDataBody.append('timestamp', new Date().toLocaleString());
-
-      const socialsInfo = formData.socials
-        .map(s => `${s.platform.toUpperCase()}: ${s.handle} (${s.reach})`)
-        .join(' | ');
-      formDataBody.append('socials', socialsInfo);
-
-      await fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors', // Important for Google Script
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: formDataBody.toString(),
-      });
-
-      setIsLoading(false);
-      setIsSubmitted(true);
-    } catch (err) {
-      console.error('Submission error:', err);
-      setError('Something went wrong submitting your application. Please try again.');
-      setIsLoading(false);
-    }
-  };
-
-  if (isSubmitted) {
-    return (
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="bg-dark-green border border-brand/30 p-12 rounded-3xl text-center"
-      >
-        <div className="w-20 h-20 bg-brand rounded-full flex items-center justify-center mx-auto mb-6">
-          <CheckCircle2 className="w-10 h-10 text-black" />
-        </div>
-        <h3 className="text-3xl font-bold mb-4 italic uppercase">Application Received!</h3>
-        <p className="text-muted-text max-w-md mx-auto">
-          We will review your form submission and reach out shortly. Get ready to change the game.
-        </p>
-        <button
-          onClick={() => setIsSubmitted(false)}
-          className="mt-8 text-brand font-bold uppercase tracking-widest text-sm hover:underline"
-        >
-          Submit another application
-        </button>
-      </motion.div>
-    );
-  }
-
   return (
     <div id="signup" className="py-32 px-6 relative overflow-hidden">
       {/* Background Accents */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(20,184,102,0.04),transparent_60%)]" />
 
-      <div className="max-w-6xl xl:max-w-7xl mx-auto relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 xl:gap-20 items-start lg:items-center">
-          <div>
-            <h2 className="text-5xl font-black italic uppercase tracking-tighter mb-6 leading-none">
-              Ready to <span className="text-complement">Level Up?</span>
+      <div className="max-w-7xl mx-auto relative z-10 text-center">
+        <motion.div
+           initial={{ opacity: 0, y: 30 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: true }}
+           className="space-y-16"
+        >
+          <div className="space-y-6">
+            <h2 className="text-6xl md:text-[120px] font-black italic uppercase tracking-tighter leading-none mb-6">
+              Ready to <br className="hidden md:block" />
+              <span className="text-brand">Level Up?</span>
             </h2>
-            <p className="text-xl text-muted-text mb-8">
+            <p className="text-xl md:text-3xl text-muted-text max-w-3xl mx-auto font-medium">
               Join the elite network of creators shaping the future of gaming culture.
             </p>
-            <ul className="space-y-4">
-              {[
-                'Direct access to premium content',
-                'Exclusive invite-only access',
-                'Dedicated creator events',
-                'Performance-based perks'
-              ].map((item, i) => (
-                <li key={i} className="flex items-center gap-3 text-muted-text">
-                  <CheckCircle2 className="w-5 h-5 text-brand" />
-                  {item}
-                </li>
-              ))}
-            </ul>
           </div>
 
-          <form onSubmit={handleSubmit} className="bg-dark-green/40 border border-white/10 p-8 rounded-3xl space-y-6">
-            {/* Step Progress */}
-            <div className="flex gap-2 mb-8">
-              {[1, 2, 3].map((s) => (
-                <div key={s} className={`h-1 flex-1 rounded-full transition-colors ${step >= s ? 'bg-brand' : 'bg-white/10'}`} />
-              ))}
-            </div>
+          <div className="flex justify-center">
+            <a
+              href="#" /* Link to be provided later */
+              className="group relative inline-flex items-center gap-6 bg-brand text-black px-12 md:px-20 py-8 md:py-10 rounded-full text-2xl md:text-4xl font-black uppercase tracking-widest hover:bg-white hover:scale-105 transition-all duration-500 shadow-[0_0_50px_rgba(20,184,102,0.3)] hover:shadow-[0_0_80px_rgba(255,255,255,0.4)]"
+            >
+              Apply Now
+              <ArrowRight className="w-8 h-8 md:w-12 md:h-12 group-hover:translate-x-3 transition-transform duration-500" />
+              
+              {/* Outer Glow Effect */}
+              <div className="absolute inset-0 rounded-full bg-brand/20 blur-3xl -z-10 group-hover:bg-brand/40 transition-colors" />
+            </a>
+          </div>
 
-            {/* STEP 1: Personal Info */}
-            {step === 1 && (
-              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
-                <div>
-                  <h3 className="text-2xl font-black uppercase italic tracking-tighter text-white mb-2">Player Profile</h3>
-                  <p className="text-sm text-muted-text">Let's start with the basics.</p>
-                </div>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Full Name *</label>
-                    <input
-                      required
-                      type="text"
-                      className="w-full bg-[#141414] border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors"
-                      placeholder="Rahul Sharma"
-                      value={formData.name}
-                      onChange={e => setFormData({ ...formData, name: e.target.value })}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Email Address *</label>
-                    <div className="relative">
-                      <input
-                        required
-                        type="email"
-                        className={`w-full bg-[#141414] border rounded-xl px-4 py-3 outline-none transition-all ${formData.email && !isValidEmail(formData.email)
-                          ? 'border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.1)]'
-                          : formData.email && isValidEmail(formData.email)
-                            ? 'border-brand shadow-[0_0_10px_rgba(20,184,102,0.1)]'
-                            : 'border-white/10 focus:border-brand'
-                          }`}
-                        placeholder="amit@example.com"
-                        value={formData.email}
-                        onChange={e => {
-                          setFormData({ ...formData, email: e.target.value });
-                          setLocalError('');
-                        }}
-                      />
-                      {formData.email && (
-                        <div className="absolute right-4 top-1/2 -translate-y-1/2">
-                          {isValidEmail(formData.email) ? (
-                            <CheckCircle2 className="w-5 h-5 text-brand" />
-                          ) : (
-                            <AlertCircle className="w-5 h-5 text-red-500" />
-                          )}
-                        </div>
-                      )}
-                    </div>
-                    {formData.email && !isValidEmail(formData.email) && (
-                      <p className="text-[10px] text-red-500 font-bold uppercase tracking-widest mt-1 ml-1">Please enter a valid email format</p>
-                    )}
-                  </div>
-                </div>
-                {localError && step === 1 && (
-                  <motion.p initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-red-500 text-xs font-bold italic">{localError}</motion.p>
-                )}
-                <button
-                  type="button"
-                  onClick={() => {
-                    const err = validateStep1();
-                    if (err) setLocalError(err);
-                    else {
-                      setLocalError('');
-                      setStep(2);
-                    }
-                  }}
-                  className={`w-full py-3 rounded-xl font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${!validateStep1()
-                    ? 'bg-brand text-black hover:bg-white hover:scale-[1.02]'
-                    : 'bg-white/5 border border-white/10 text-white/50 hover:border-white/20'
-                    }`}
-                >
-                  Next Step <ArrowRight className="w-5 h-5" />
-                </button>
-              </motion.div>
-            )}
-
-            {/* STEP 2: Socials */}
-            {step === 2 && (
-              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
-                <div>
-                  <h3 className="text-2xl font-black uppercase italic tracking-tighter text-white mb-2">Digital Footprint</h3>
-                  <p className="text-sm text-muted-text">Where do you create?</p>
-                </div>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between border-t border-white/10 pt-6">
-                    <label className="text-sm font-black uppercase italic tracking-widest text-white">Social Handles & Metrics</label>
-                  </div>
-                  <div className="space-y-6 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
-                    {formData.socials.map((social, index) => (
-                      <div key={index} className="bg-[#141414] border border-white/10 p-6 md:p-8 rounded-3xl relative space-y-6">
-                        {formData.socials.length > 1 && (
-                          <button
-                            type="button"
-                            onClick={() => {
-                              const newSocials = formData.socials.filter((_, i) => i !== index);
-                              setFormData({ ...formData, socials: newSocials });
-                            }}
-                            className="absolute right-6 top-6 text-muted-text hover:text-red-500 transition-colors"
-                            title="Remove handle"
-                          >
-                            <X className="w-5 h-5" />
-                          </button>
-                        )}
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-                          <div className="space-y-3">
-                            <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Platform *</label>
-                            <div className="relative">
-                              <select
-                                className="w-full bg-dark-green/50 border border-white/10 rounded-xl pl-5 pr-12 py-4 focus:border-brand outline-none transition-colors appearance-none"
-                                value={social.platform}
-                                onChange={e => {
-                                  const newSocials = [...formData.socials];
-                                  newSocials[index].platform = e.target.value;
-                                  setFormData({ ...formData, socials: newSocials });
-                                }}
-                              >
-                                <option value="youtube">YouTube</option>
-                                <option value="instagram">Instagram</option>
-                                <option value="twitch">Twitch</option>
-                                <option value="facebook">Facebook</option>
-                                <option value="twitter">X / Twitter</option>
-                              </select>
-                              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-text pointer-events-none" />
-                            </div>
-                          </div>
-
-                          <div className="space-y-3">
-                            <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Handle / Link *</label>
-                            <input
-                              required
-                              type="text"
-                              className="w-full bg-dark-green/50 border border-white/10 rounded-xl px-5 py-4 focus:border-brand outline-none transition-colors"
-                              placeholder={social.platform === 'youtube' ? 'youtube.com/@username' : '@username'}
-                              value={social.handle}
-                              onChange={e => {
-                                const newSocials = [...formData.socials];
-                                newSocials[index].handle = e.target.value;
-                                setFormData({ ...formData, socials: newSocials });
-                              }}
-                            />
-                          </div>
-
-                          <div className="space-y-3">
-                            <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Content Type *</label>
-                            <div className="relative">
-                              <select
-                                className="w-full bg-dark-green/50 border border-white/10 rounded-xl pl-5 pr-12 py-4 focus:border-brand outline-none transition-colors appearance-none"
-                                value={social.contentType}
-                                onChange={e => {
-                                  const newSocials = [...formData.socials];
-                                  newSocials[index].contentType = e.target.value;
-                                  setFormData({ ...formData, socials: newSocials });
-                                }}
-                              >
-                                <option value="reels">Reels / Shorts</option>
-                                <option value="posts">Static Posts</option>
-                                <option value="news">Gaming News</option>
-                                <option value="streams">Live Streams</option>
-                                <option value="longform">Long-form Video</option>
-                              </select>
-                              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-text pointer-events-none" />
-                            </div>
-                          </div>
-
-                          <div className="space-y-3">
-                            <label className="text-xs font-bold uppercase tracking-widest text-muted-text">Total Followers/Subs *</label>
-                            <input
-                              required
-                              type="text"
-                              className="w-full bg-dark-green/50 border border-white/10 rounded-xl px-5 py-4 focus:border-brand outline-none transition-colors"
-                              placeholder="e.g. 50k+"
-                              value={social.reach}
-                              onChange={e => {
-                                const newSocials = [...formData.socials];
-                                newSocials[index].reach = e.target.value;
-                                setFormData({ ...formData, socials: newSocials });
-                              }}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-
-                    <button
-                      type="button"
-                      onClick={() => setFormData({ ...formData, socials: [...formData.socials, { platform: 'instagram', handle: '', contentType: 'reels', reach: '' }] })}
-                      className="w-full py-4 border-2 border-dashed border-white/10 rounded-2xl text-xs text-muted-text font-bold uppercase tracking-widest hover:border-brand/50 hover:text-brand transition-all flex items-center justify-center gap-2"
-                    >
-                      <Plus className="w-4 h-4" /> Add Another Platform
-                    </button>
-                  </div>
-                </div>
-                {localError && step === 2 && (
-                  <motion.p initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="text-red-500 text-xs font-bold italic">{localError}</motion.p>
-                )}
-                <div className="flex gap-4">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setLocalError('');
-                      setStep(1);
-                    }}
-                    className="flex-1 bg-transparent border border-white/10 text-white py-3 rounded-xl font-bold uppercase tracking-widest hover:border-white/30 transition-colors"
-                  >
-                    Back
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const err = validateStep2();
-                      if (err) setLocalError(err);
-                      else {
-                        setLocalError('');
-                        setStep(3);
-                      }
-                    }}
-                    className={`flex-[2] py-3 rounded-xl font-black uppercase tracking-widest transition-all flex items-center justify-center gap-2 ${!validateStep2()
-                      ? 'bg-brand text-black hover:bg-white hover:scale-[1.02]'
-                      : 'bg-white/5 border border-white/10 text-white/50 hover:border-white/20'
-                      }`}
-                  >
-                    Next Step <ArrowRight className="w-5 h-5" />
-                  </button>
-                </div>
-              </motion.div>
-            )}
-
-            {/* STEP 3: Final Details */}
-            {step === 3 && (
-              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
-                <div>
-                  <h3 className="text-2xl font-black uppercase italic tracking-tighter text-white mb-2">Game Formats</h3>
-                  <p className="text-sm text-muted-text">What do you love to play?</p>
-                </div>
-
-                <div className="space-y-6">
-                  <div className="space-y-4 border-t border-white/10 pt-6">
-                    <label className="text-xs font-bold uppercase tracking-widest text-muted-text block mb-2">Game Genres You Create For * (Select at least one)</label>
-                    <div className="grid grid-cols-2 gap-3">
-                      {['FPS', 'MOBA', 'RPG', 'Esports', 'Casual', 'Other'].map(genre => (
-                        <label key={genre} className="flex items-center gap-3 bg-white/5 border border-white/10 p-3 rounded-xl cursor-pointer hover:border-brand/50 transition-colors group">
-                          <input
-                            type="checkbox"
-                            className="w-4 h-4 accent-brand cursor-pointer"
-                            checked={formData.selectedGenres.includes(genre)}
-                            onChange={e => {
-                              const newGenres = e.target.checked
-                                ? [...formData.selectedGenres, genre]
-                                : formData.selectedGenres.filter(g => g !== genre);
-                              setFormData({ ...formData, selectedGenres: newGenres });
-                            }}
-                          />
-                          <span className={`text-sm font-bold uppercase tracking-wider transition-colors ${formData.selectedGenres.includes(genre) ? 'text-brand' : 'text-muted-text group-hover:text-white'}`}>
-                            {genre}
-                          </span>
-                        </label>
-                      ))}
-                    </div>
-
-                    {formData.selectedGenres.includes('Other') && (
-                      <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="pt-2">
-                        <input
-                          required
-                          type="text"
-                          className="w-full bg-[#141414] border border-white/10 rounded-xl px-4 py-3 focus:border-brand outline-none transition-colors"
-                          placeholder="Tell us what you play"
-                          value={formData.otherGenre}
-                          onChange={e => setFormData({ ...formData, otherGenre: e.target.value })}
-                        />
-                      </motion.div>
-                    )}
-                  </div>
-
-                  <div className="space-y-4 border-t border-white/10 pt-6">
-                    <label className="text-xs font-bold uppercase tracking-widest text-muted-text block mb-2">Referred By</label>
-                    <input
-                      type="text"
-                      className="w-full bg-dark-green/50 border border-white/10 rounded-xl px-5 py-4 focus:border-brand outline-none transition-colors"
-                      placeholder="E.g. Friend, Social Media, etc."
-                      value={formData.referredBy}
-                      onChange={e => setFormData({ ...formData, referredBy: e.target.value })}
-                    />
-                  </div>
-
-                  <div className="flex items-start gap-4 pt-4 px-1">
-                    <input
-                      required
-                      type="checkbox"
-                      checked={formData.agreedToTerms}
-                      onChange={e => setFormData({ ...formData, agreedToTerms: e.target.checked })}
-                      className="h-5 w-5 mt-0.5 cursor-pointer accent-brand shrink-0"
-                    />
-                    <span className="text-sm text-muted-text select-none leading-tight">
-                      I agree to be contacted by JioGames for campaigns, opportunities, and creator network updates.
-                    </span>
-                  </div>
-                </div>
-
-                <div className="space-y-2 mt-8">
-                  {error && <p className="text-red-500 text-sm font-bold">{error}</p>}
-                  <div className="flex gap-4">
-                    <button
-                      type="button"
-                      onClick={() => setStep(2)}
-                      className="flex-1 bg-transparent border border-white/10 text-white py-3 rounded-xl font-bold uppercase tracking-widest hover:border-white/30 transition-colors"
-                      disabled={isLoading}
-                    >
-                      Back
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={isLoading || !isFormValid()}
-                      className="flex-[2] bg-brand text-black py-3 rounded-xl font-black uppercase tracking-widest hover:bg-white transition-colors group flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:grayscale"
-                    >
-                      {isLoading ? 'Submitting...' : 'Submit Application'}
-                      {!isLoading && <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </form>
-        </div>
+          <div className="pt-12 flex flex-wrap justify-center gap-x-12 gap-y-6 text-muted-text font-black uppercase tracking-[0.2em] text-sm md:text-base">
+            {[
+              { label: 'Direct Access', icon: Trophy },
+              { label: 'Exclusive Events', icon: Star },
+              { label: 'Early Access', icon: Zap },
+              { label: 'Brand Deals', icon: Gamepad2 }
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <item.icon className="w-5 h-5 text-brand" />
+                {item.label}
+              </div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </div>
   );
