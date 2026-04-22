@@ -437,10 +437,10 @@ const SignupForm = () => {
           <div className="flex justify-center">
             <a
               href="#" /* Link to be provided later */
-              className="group relative inline-flex items-center gap-6 bg-brand text-black px-12 md:px-20 py-8 md:py-10 rounded-full text-2xl md:text-4xl font-black uppercase tracking-widest hover:bg-white hover:scale-105 transition-all duration-500 shadow-[0_0_50px_rgba(20,184,102,0.3)] hover:shadow-[0_0_80px_rgba(255,255,255,0.4)]"
+              className="group relative inline-flex items-center gap-4 bg-brand text-black px-8 md:px-10 py-3 md:py-4 rounded-full text-lg md:text-xl font-black uppercase tracking-widest hover:bg-white hover:scale-105 transition-all duration-500 shadow-[0_0_30px_rgba(20,184,102,0.3)] hover:shadow-[0_0_50px_rgba(255,255,255,0.4)]"
             >
               Apply Now
-              <ArrowRight className="w-8 h-8 md:w-12 md:h-12 group-hover:translate-x-3 transition-transform duration-500" />
+              <ArrowRight className="w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-3 transition-transform duration-500" />
               
               {/* Outer Glow Effect */}
               <div className="absolute inset-0 rounded-full bg-brand/20 blur-3xl -z-10 group-hover:bg-brand/40 transition-colors" />
@@ -599,9 +599,9 @@ export default function App() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
               <button
                 onClick={() => document.getElementById('signup')?.scrollIntoView({ behavior: 'smooth' })}
-                className="w-full sm:w-auto bg-white text-black px-10 py-5 rounded-full text-lg font-black uppercase tracking-widest hover:bg-brand hover:text-white transition-all transform hover:scale-105"
+                className="w-full sm:w-auto bg-white text-black px-8 py-4 rounded-full text-lg font-black uppercase tracking-widest hover:bg-brand hover:text-white transition-all transform hover:scale-105"
               >
-                Sign Up Now
+                Apply Now
               </button>
               <button
                 onClick={() => document.getElementById('perks')?.scrollIntoView({ behavior: 'smooth' })}
