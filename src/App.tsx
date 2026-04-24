@@ -47,6 +47,7 @@ interface FAQItem {
 }
 
 import contentData from './content.json';
+import termsData from './terms.json';
 
 // --- Brand Icons (Custom SVG) ---
 const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -103,6 +104,117 @@ const APP_LINKS: { platform: string, url: string }[] = contentData.appLinks;
 
 // --- Components ---
 
+const TermsOfService = ({ onBack }: { onBack: () => void }) => {
+  const { document } = termsData as any;
+
+  const renderList = (title: string, items: string[] | undefined, icon: React.ReactNode = null) => {
+    if (!items || items.length === 0) return null;
+    return (
+      <div className="mt-4 first:mt-0">
+        {title && <h4 className="text-[11px] font-black text-brand uppercase tracking-[0.2em] mb-4">{title}</h4>}
+        <ul className="space-y-4">
+          {items.map((item, idx) => (
+            <li key={idx} className="flex gap-4 text-[17px] leading-relaxed">
+              {icon || <div className="w-1.5 h-1.5 rounded-full bg-brand mt-[11px] shrink-0" />}
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+
+  return (
+    <div className="min-h-screen bg-black text-white pt-32 pb-32 px-6">
+      <div className="max-w-4xl mx-auto relative">
+        <button
+          onClick={onBack}
+          className="mb-16 flex items-center gap-3 text-brand hover:text-white transition-colors font-bold"
+        >
+          <ArrowRight className="w-5 h-5 rotate-180" />
+          Back to Home
+        </button>
+
+        <header className="mb-24">
+          <h1 className="text-4xl md:text-7xl font-display font-black mb-10 leading-[1.1] tracking-tight">
+            {document.title}
+          </h1>
+          <div className="h-1 w-20 bg-brand mb-10" />
+          {document.introduction && (
+            <p className="text-xl md:text-2xl text-muted-text leading-relaxed">
+              {document.introduction}
+            </p>
+          )}
+        </header>
+
+        <div className="space-y-24 text-muted-text/80 pb-32">
+          {document.sections.map((section: any, idx: number) => (
+            <section key={idx}>
+              <div className="flex gap-6 items-start mb-8">
+                <span className="text-brand font-display font-black text-2xl shrink-0 pt-1">
+                  {String(section.section).padStart(2, '0')}.
+                </span>
+                <h2 className="text-2xl md:text-4xl font-display font-bold text-white tracking-tight uppercase">
+                  {section.title}
+                </h2>
+              </div>
+
+              <div className="space-y-10 pl-2">
+                {renderList("", section.clauses)}
+                {renderList("Obligations", section.obligations)}
+                {renderList("Content Expectations", section.content_expectations)}
+                {renderList("Restrictions", section.restrictions)}
+                {renderList("Content Restrictions", section.content_restrictions)}
+                {renderList("Consequences", section.consequences_of_misuse)}
+                {renderList("Responsibilities", section.sole_responsibilities)}
+                {renderList("Grounds for Termination", section.grounds_for_termination)}
+                {renderList("Our Rights", section.jiogames_rights)}
+                {renderList("No Obligation", section.no_obligation_to)}
+                {renderList("Limitations", section.not_liable_for)}
+                {renderList("Opportunities", section.possible_opportunities)}
+                {renderList("Confidential Info Includes", section.confidential_information_includes)}
+                {renderList("Confidentiality Obligations", section.confidentiality_obligations)}
+
+                {section.notes && renderList("Notes", section.notes, <CheckCircle2 className="w-4 h-4 text-brand mt-1.5 shrink-0" />)}
+
+                {section.maximum_obligation && (
+                  <div className="mt-8">
+                    <span className="text-white font-bold text-[11px] uppercase tracking-widest block mb-2">Maximum Obligation</span>
+                    <p className="text-[17px] leading-relaxed text-muted-text/80">{section.maximum_obligation}</p>
+                  </div>
+                )}
+
+                {section.governing_law && (
+                  <div className="grid md:grid-cols-2 gap-12 mt-12 pt-8 border-t border-white/10">
+                    <div>
+                      <span className="text-brand font-black text-[11px] uppercase tracking-[0.3em] block mb-2">Governing Law</span>
+                      <p className="text-white font-medium text-lg">{section.governing_law}</p>
+                    </div>
+                    <div>
+                      <span className="text-brand font-black text-[11px] uppercase tracking-[0.3em] block mb-2">Jurisdiction</span>
+                      <p className="text-white font-medium text-lg">{section.jurisdiction}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </section>
+          ))}
+        </div>
+
+        <div className="mt-20 pt-10 border-t border-white/10 flex justify-center">
+          <button
+            onClick={onBack}
+            className="group relative inline-flex items-center gap-4 bg-brand text-black px-10 py-4 rounded-full text-lg font-black hover:bg-white hover:scale-105 transition-all shadow-[0_0_30px_rgba(20,184,102,0.3)] hover:shadow-[0_0_50px_rgba(255,255,255,0.4)]"
+          >
+            Back to Application
+            <ArrowRight className="w-6 h-6" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const BackgroundEffects = () => (
   <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
     {/* Animated Blobs */}
@@ -140,19 +252,19 @@ const Navbar = () => (
   <nav className="fixed top-0 left-0 right-0 z-50 bg-[#141414]/80 backdrop-blur-md border-b border-white/10">
     <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
       <div className="flex items-center z-50">
-        <img src="images/Jiogames_horizontal.svg" alt="JioGames" className="h-8 md:h-10 object-contain" />
+        <img src="images/Jiogames_horizontal.svg" alt="Jiogames" className="h-8 md:h-10 object-contain" />
       </div>
-      <div className="hidden md:flex items-center gap-8 text-sm font-medium uppercase tracking-widest text-muted-text">
+      <div className="hidden md:flex items-center gap-8 text-sm font-medium text-muted-text">
         <a href="#how-it-works" className="hover:text-brand transition-colors">How it works</a>
         <a href="#perks" className="hover:text-brand transition-colors">Perks</a>
-        <a href="#creator-types" className="hover:text-brand transition-colors">Creator Types</a>
-        <a href="#faq" className="hover:text-brand transition-colors">FAQ</a>
+        <a href="#creator-types" className="hover:text-brand transition-colors">Creator types</a>
+        <a href="#faq" className="hover:text-brand transition-colors">Faq</a>
       </div>
       <button
         onClick={() => document.getElementById('signup')?.scrollIntoView({ behavior: 'smooth' })}
-        className="bg-brand text-black px-6 py-2.5 rounded-full text-sm font-bold uppercase tracking-wider hover:bg-white hover:scale-105 transition-all shadow-[0_0_20px_rgba(20,184,102,0.3)] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
+        className="bg-brand text-black px-6 py-2.5 rounded-full text-sm font-bold hover:bg-white hover:scale-105 transition-all shadow-[0_0_20px_rgba(20,184,102,0.3)] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)]"
       >
-        Apply Now
+        Apply now
       </button>
     </div>
   </nav>
@@ -182,7 +294,7 @@ const FeatureCard: React.FC<{ feature: Feature; index: number }> = ({ feature, i
     <div className="absolute inset-0 z-10 p-8 flex flex-col justify-end">
       <div className="transform transition-transform duration-500 group-hover:-translate-y-2">
         <div className="w-12 h-1 bg-brand mb-6 transform origin-left transition-transform duration-500 group-hover:scale-x-150" />
-        <h3 className="text-3xl font-black italic uppercase tracking-tighter mb-3 leading-none group-hover:text-complement transition-colors duration-500">
+        <h3 className="text-3xl font-display font-bold mb-3 leading-tight group-hover:text-complement transition-colors duration-500">
           {feature.title}
         </h3>
         <p className="text-muted-text leading-relaxed text-lg opacity-0 group-hover:opacity-100 transition-all duration-500 max-h-0 group-hover:max-h-32 overflow-hidden">
@@ -201,7 +313,7 @@ const FAQSection = () => {
 
   return (
     <section id="faq" className="py-32 px-6 max-w-3xl mx-auto">
-      <h2 className="text-4xl font-black italic uppercase tracking-tighter mb-16 text-center">Frequently Asked Questions</h2>
+      <h2 className="text-3xl font-display font-bold mb-16 text-center">Frequently asked questions</h2>
       <div className="space-y-2">
         {FAQS.map((faq, i) => (
           <div key={i} className="border-b border-white/10 last:border-0">
@@ -269,8 +381,8 @@ const CreatorTypesSection = () => (
     <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(20,184,102,0.05),transparent_70%)]" />
 
     <div className="max-w-7xl mx-auto relative z-10">
-      <h2 className="text-5xl md:text-7xl font-black italic uppercase tracking-tighter mb-16">
-        Creator <span className="text-brand">Types</span> we recruit
+      <h2 className="text-5xl md:text-7xl font-display font-black mb-16">
+        Creator <span className="text-brand">types</span> we welcome
       </h2>
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
         {CREATOR_TYPES.map((type, i) => (
@@ -299,7 +411,7 @@ const CreatorTypesSection = () => (
             {/* Content Overlay */}
             <div className="absolute inset-0 z-10 p-8 flex flex-col justify-end">
               <div className="transform transition-transform duration-500 group-hover:-translate-y-2">
-                <h3 className="text-2xl font-black italic uppercase tracking-tighter mb-3 leading-none group-hover:text-brand transition-colors duration-500">
+                <h3 className="text-2xl font-display font-bold mb-3 leading-tight group-hover:text-brand transition-colors duration-500">
                   {type.title}
                 </h3>
                 <ul className="text-white/90 font-medium leading-relaxed text-lg opacity-0 group-hover:opacity-100 transition-all duration-500 max-h-0 group-hover:max-h-32 overflow-hidden list-disc list-inside space-y-1">
@@ -332,9 +444,9 @@ const HowItWorksSection = () => {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="text-5xl md:text-8xl font-black italic uppercase tracking-tighter leading-none mb-6"
+              className="text-5xl md:text-8xl font-display font-black leading-none mb-6"
             >
-              How it <span className="text-brand">Works.</span>
+              How it <span className="text-brand">works.</span>
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, x: -20 }}
@@ -343,7 +455,7 @@ const HowItWorksSection = () => {
               transition={{ delay: 0.1 }}
               className="text-muted-text text-xl"
             >
-              A streamlined journey from application to activation.
+              Four steps from application to activation.
             </motion.p>
           </div>
         </div>
@@ -379,7 +491,7 @@ const HowItWorksSection = () => {
                 <div className="bg-white/[0.02] border border-white/10 p-8 rounded-[2.5rem] hover:bg-white/[0.04] hover:border-brand/30 transition-all duration-500 h-full flex flex-col items-start text-left">
                   {/* Circle Step */}
                   <div className="w-14 h-14 rounded-full bg-black border border-white/10 flex items-center justify-center mb-10 group-hover:border-brand group-hover:scale-110 transition-all duration-500 relative z-10">
-                    <span className={`text-xl font-black italic transition-colors duration-500 ${hoveredIndex === i ? 'text-brand' : 'text-white/40'}`}>
+                    <span className={`text-xl font-black transition-colors duration-500 ${hoveredIndex === i ? 'text-brand' : 'text-white/40'}`}>
                       {step.number}
                     </span>
                     {/* Inner Glow */}
@@ -387,7 +499,7 @@ const HowItWorksSection = () => {
                   </div>
 
                   <div className="space-y-4">
-                    <h3 className="text-2xl font-bold italic uppercase group-hover:text-brand transition-colors">
+                    <h3 className="text-2xl font-bold group-hover:text-brand transition-colors">
                       {step.title}
                     </h3>
                     <p className="text-muted-text leading-relaxed text-base">
@@ -411,7 +523,7 @@ const HowItWorksSection = () => {
   );
 };
 
-const SignupForm = () => {
+const SignupForm = ({ onTermsClick }: { onTermsClick: () => void }) => {
   return (
     <div id="signup" className="py-32 px-6 relative overflow-hidden">
       {/* Background Accents */}
@@ -419,46 +531,46 @@ const SignupForm = () => {
 
       <div className="max-w-7xl mx-auto relative z-10 text-center">
         <motion.div
-           initial={{ opacity: 0, y: 30 }}
-           whileInView={{ opacity: 1, y: 0 }}
-           viewport={{ once: true }}
-           className="space-y-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="space-y-12"
         >
           <div className="space-y-6">
-            <h2 className="text-6xl md:text-[120px] font-black italic uppercase tracking-tighter leading-none mb-6">
+            <h2 className="text-6xl md:text-[100px] font-display font-black leading-none mb-6">
               Ready to <br className="hidden md:block" />
-              <span className="text-brand">Level Up?</span>
+              <span className="text-brand">Level up?</span>
             </h2>
             <p className="text-xl md:text-3xl text-muted-text max-w-3xl mx-auto font-medium">
-              Join the elite network of creators shaping the future of gaming culture.
+
             </p>
           </div>
 
-          <div className="flex justify-center">
-            <a
-              href="#" /* Link to be provided later */
-              className="group relative inline-flex items-center gap-4 bg-brand text-black px-8 md:px-10 py-3 md:py-4 rounded-full text-lg md:text-xl font-black uppercase tracking-widest hover:bg-white hover:scale-105 transition-all duration-500 shadow-[0_0_30px_rgba(20,184,102,0.3)] hover:shadow-[0_0_50px_rgba(255,255,255,0.4)]"
-            >
-              Apply Now
-              <ArrowRight className="w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-3 transition-transform duration-500" />
-              
-              {/* Outer Glow Effect */}
-              <div className="absolute inset-0 rounded-full bg-brand/20 blur-3xl -z-10 group-hover:bg-brand/40 transition-colors" />
-            </a>
-          </div>
+          <div className="space-y-8">
+            <div className="flex justify-center">
+              <a
+                href={contentData.applyNowUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="group relative inline-flex items-center gap-4 bg-brand text-black px-8 md:px-10 py-3 md:py-4 rounded-full text-lg md:text-xl font-black hover:bg-white hover:scale-105 transition-all duration-500 shadow-[0_0_30px_rgba(20,184,102,0.3)] hover:shadow-[0_0_50px_rgba(255,255,255,0.4)]"
+              >
+                Apply now
+                <ArrowRight className="w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-3 transition-transform duration-500" />
 
-          <div className="pt-12 flex flex-wrap justify-center gap-x-12 gap-y-6 text-muted-text font-black uppercase tracking-[0.2em] text-sm md:text-base">
-            {[
-              { label: 'Direct Access', icon: Trophy },
-              { label: 'Exclusive Events', icon: Star },
-              { label: 'Early Access', icon: Zap },
-              { label: 'Brand Deals', icon: Gamepad2 }
-            ].map((item, i) => (
-              <div key={i} className="flex items-center gap-3">
-                <item.icon className="w-5 h-5 text-brand" />
-                {item.label}
-              </div>
-            ))}
+                {/* Outer Glow Effect */}
+                <div className="absolute inset-0 rounded-full bg-brand/20 blur-3xl -z-10 group-hover:bg-brand/40 transition-colors" />
+              </a>
+            </div>
+
+            <div className="text-white/40 text-sm font-medium">
+              By applying, I accept the Creator{' '}
+              <button
+                onClick={onTermsClick}
+                className="text-brand hover:underline underline-offset-4 font-bold"
+              >
+                Terms & Conditions
+              </button>
+            </div>
           </div>
         </motion.div>
       </div>
@@ -466,7 +578,7 @@ const SignupForm = () => {
   );
 };
 
-const Footer = () => (
+const Footer = ({ onTermsClick }: { onTermsClick: () => void }) => (
   <footer className="pt-20 pb-10 px-6 relative z-10">
     <div className="max-w-7xl mx-auto">
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-12 mb-20">
@@ -499,7 +611,7 @@ const Footer = () => (
               <a key={idx} href={app.url} target="_blank" rel="noreferrer" className="flex items-center gap-3 bg-dark-green border border-white/10 px-4 py-3 rounded-xl hover:border-brand/50 hover:bg-[#141414] transition-all group">
                 <Smartphone className="w-6 h-6 text-brand" />
                 <div className="text-left">
-                  <p className="text-[10px] text-muted-text uppercase tracking-widest leading-none mb-1 group-hover:text-white transition-colors">Download on</p>
+                  <p className="text-[10px] text-muted-text leading-none mb-1 group-hover:text-white transition-colors">Download on</p>
                   <p className="text-sm font-bold leading-none">{app.platform}</p>
                 </div>
               </a>
@@ -509,11 +621,20 @@ const Footer = () => (
 
         {FOOTER_COLUMNS.map((column, i) => (
           <div key={i}>
-            <h4 className="font-bold uppercase tracking-widest text-xs text-white mb-6">{column.title}</h4>
+            <h4 className="font-bold text-xs text-white mb-6">{column.title}</h4>
             <ul className="space-y-4 text-sm text-muted-text">
               {column.links.map((link, j) => (
                 <li key={j}>
-                  <a href={link.url} target="_blank" rel="noreferrer" className="hover:text-white transition-colors">{link.label}</a>
+                  {link.label.toLowerCase().includes("terms") ? (
+                    <button
+                      onClick={onTermsClick}
+                      className="hover:text-white transition-colors text-left"
+                    >
+                      {link.label}
+                    </button>
+                  ) : (
+                    <a href={link.url} target="_blank" rel="noreferrer" className="hover:text-white transition-colors">{link.label}</a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -521,8 +642,8 @@ const Footer = () => (
         ))}
       </div>
 
-      <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-text uppercase tracking-widest">
-        <p>© 2026 JioGames Creator Network. All rights reserved.</p>
+      <div className="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-text">
+        <p>© 2026 JioGames creator network. All rights reserved.</p>
         <div className="flex gap-8">
           <a href="#faq" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">Support</a>
           <a href="#signup" target="_blank" rel="noreferrer" className="hover:text-white transition-colors">Contact</a>
@@ -533,151 +654,180 @@ const Footer = () => (
 );
 
 export default function App() {
+  const [showTerms, setShowTerms] = useState(false);
+
+  useEffect(() => {
+    if (showTerms) window.scrollTo(0, 0);
+  }, [showTerms]);
+
   return (
     <div className="min-h-screen text-white selection:bg-brand selection:text-black font-sans relative">
       <BackgroundEffects />
       <Navbar />
 
-      {/* Hero Section */}
-      <header className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32 pb-20">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/60 to-[#141414] z-10" />
-          <motion.img
-            initial={{ scale: 1.05 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 15, repeat: Infinity, repeatType: "reverse" }}
-            src="https://jiogames.com/assets/banner/card-banner.png"
-            alt="Smiling Gamer"
-            className="w-full h-full object-cover opacity-60"
-            referrerPolicy="no-referrer"
-          />
-
-          {/* Floating Particles */}
-          {[...Array(20)].map((_, i) => (
-            <motion.div
-              key={i}
-              initial={{
-                x: Math.random() * 100 + '%',
-                y: Math.random() * 100 + '%',
-                opacity: Math.random() * 0.5
-              }}
-              animate={{
-                y: [null, '-20%', '120%'],
-                opacity: [0, 0.5, 0]
-              }}
-              transition={{
-                duration: Math.random() * 10 + 10,
-                repeat: Infinity,
-                ease: "linear",
-                delay: Math.random() * 10
-              }}
-              className="absolute w-1 h-1 bg-brand rounded-full blur-[1px]"
-            />
-          ))}
-        </div>
-
-        <div className="relative z-20 max-w-7xl mx-auto px-6 text-center">
+      <AnimatePresence mode="wait">
+        {showTerms ? (
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            key="terms"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.5 }}
           >
-            <div className="inline-flex items-center gap-3 bg-brand/10 border border-brand/30 text-brand px-6 py-2 rounded-full text-xs font-bold uppercase tracking-[0.2em] mb-8 shadow-[0_0_20px_rgba(20,184,102,0.1)]">
-              <div className="w-1.5 h-1.5 bg-brand rounded-full animate-pulse" />
-              Now Accepting Applications
-            </div>
-            <div className="flex justify-center mb-6">
-              <img src="images/Jiogames_horizontal.svg" alt="JioGames" className="h-12 md:h-20 object-contain" />
-            </div>
-            <h1 className="text-[12vw] md:text-[8vw] font-black italic uppercase leading-[0.85] tracking-tighter mb-8">
-              Creator <br />
-              <span className="text-brand">Network.</span>
-            </h1>
-            <p className="text-lg md:text-2xl text-muted-text max-w-2xl mx-auto mb-12 font-medium">
-              Creator Network is how JioGames discovers, supports and activates creators across formats, Get access to opportunities, drops, campaigns, events and collaboration as we build a creator engine for JioGames.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <button
-                onClick={() => document.getElementById('signup')?.scrollIntoView({ behavior: 'smooth' })}
-                className="w-full sm:w-auto bg-white text-black px-8 py-4 rounded-full text-lg font-black uppercase tracking-widest hover:bg-brand hover:text-white transition-all transform hover:scale-105"
-              >
-                Apply Now
-              </button>
-              <button
-                onClick={() => document.getElementById('perks')?.scrollIntoView({ behavior: 'smooth' })}
-                className="w-full sm:w-auto border border-white/20 px-10 py-5 rounded-full text-lg font-black uppercase tracking-widest hover:bg-white/10 transition-all"
-              >
-                View Perks
-              </button>
-            </div>
+            <TermsOfService onBack={() => setShowTerms(false)} />
           </motion.div>
-        </div>
+        ) : (
+          <motion.div
+            key="home"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            {/* Hero Section */}
+            <header className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32 pb-20">
+              {/* ... Hero Content ... */}
+              <div className="absolute inset-0 z-0">
+                <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/60 to-[#141414] z-10" />
+                <motion.img
+                  initial={{ scale: 1.05 }}
+                  animate={{ scale: 1 }}
+                  transition={{ duration: 15, repeat: Infinity, repeatType: "reverse" }}
+                  src="https://jiogames.com/assets/banner/card-banner.png"
+                  alt="Smiling Gamer"
+                  className="w-full h-full object-cover opacity-60"
+                  referrerPolicy="no-referrer"
+                />
 
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-muted-text">
-          <ChevronDown className="w-8 h-8" />
-        </div>
-      </header>
-
-      {/* Features Section */}
-      <section id="perks" className="py-32 px-6 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
-            <div className="max-w-2xl">
-              <h2 className="text-5xl md:text-7xl font-black italic uppercase tracking-tighter leading-none mb-6">
-                Creator <span className="text-brand">Perks.</span>
-              </h2>
-              <p className="text-xl text-muted-text">
-                We create pathways for you to grow, get noticed, and build momentum through high-impact activations.
-              </p>
-            </div>
-
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {FEATURES.map((feature, i) => (
-              <FeatureCard key={feature.id} feature={feature} index={i} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <CreatorTypesSection />
-
-      <HowItWorksSection />
-
-      {/* Stats / Social Proof */}
-      <section className="py-20 border-y border-white/5 bg-[#141414] overflow-hidden">
-        <div className="flex whitespace-nowrap">
-          <div className="flex gap-20 animate-marquee items-center">
-            {[
-              'UGC CAMPAIGNS', 'PARTNERSHIPS', 'EXCLUSIVE DROPS', 'EARLY ACCESS', 'TOURNAMENTS', 'COMMUNITY VISIBILITY'
-            ].map((text, i) => (
-              <div key={i} className="flex items-center gap-4">
-                <Star className="w-6 h-6 text-brand fill-brand" />
-                <span className="text-6xl font-black italic uppercase tracking-tighter text-white/20">{text}</span>
+                {/* Floating Particles */}
+                {[...Array(20)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{
+                      x: Math.random() * 100 + '%',
+                      y: Math.random() * 100 + '%',
+                      opacity: Math.random() * 0.5
+                    }}
+                    animate={{
+                      y: [null, '-20%', '120%'],
+                      opacity: [0, 0.5, 0]
+                    }}
+                    transition={{
+                      duration: Math.random() * 10 + 10,
+                      repeat: Infinity,
+                      ease: "linear",
+                      delay: Math.random() * 10
+                    }}
+                    className="absolute w-1 h-1 bg-brand rounded-full blur-[1px]"
+                  />
+                ))}
               </div>
-            ))}
-          </div>
-          <div className="flex gap-20 animate-marquee items-center ml-20">
-            {[
-              'UGC CAMPAIGNS', 'GLOBAL PARTNERSHIPS', 'EXCLUSIVE DROPS', 'EARLY ACCESS', 'TOURNAMENTS', 'COMMUNITY VISIBILITY'
-            ].map((text, i) => (
-              <div key={i} className="flex items-center gap-4">
-                <Star className="w-6 h-6 text-brand fill-brand" />
-                <span className="text-6xl font-black italic uppercase tracking-tighter text-white/20">{text}</span>
+
+              <div className="relative z-20 max-w-7xl mx-auto px-6 text-center">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                >
+                  <div className="inline-flex items-center gap-4 bg-brand/10 border border-brand/30 text-brand px-8 py-3 rounded-full text-sm font-bold mb-10 shadow-[0_0_30px_rgba(20,184,102,0.2)]">
+                    <div className="w-2 h-2 bg-brand rounded-full animate-pulse shadow-[0_0_10px_#11b966]" />
+                    Now accepting applications
+                  </div>
+                  <div className="flex justify-center mb-6">
+                    <img src="images/Jiogames_horizontal.svg" alt="JioGames" className="h-12 md:h-20 object-contain" />
+                  </div>
+                  <h1 className="text-[12vw] md:text-[10vw] font-display font-black leading-[0.9] mb-8">
+                    Creator <br />
+                    <span className="text-brand"> Network</span>
+                  </h1>
+                  <p className="text-lg md:text-2xl text-muted-text max-w-2xl mx-auto mb-12 font-medium">
+                    Creator Network is how JioGames discovers, supports and activates creators across formats. Get access to opportunities, drops, campaigns, events and collaboration as we build a creator engine for JioGames.
+                  </p>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+                    <button
+                      onClick={() => document.getElementById('signup')?.scrollIntoView({ behavior: 'smooth' })}
+                      className="w-full sm:w-auto bg-brand text-black px-10 py-5 rounded-full text-lg font-black hover:bg-white hover:scale-105 transition-all shadow-[0_0_30px_rgba(20,184,102,0.3)] hover:shadow-[0_0_50px_rgba(255,255,255,0.4)]"
+                    >
+                      Apply now
+                    </button>
+                    <button
+                      onClick={() => document.getElementById('perks')?.scrollIntoView({ behavior: 'smooth' })}
+                      className="w-full sm:w-auto border border-white/20 px-10 py-5 rounded-full text-lg font-black hover:bg-white/10 transition-all"
+                    >
+                      View perks
+                    </button>
+                  </div>
+                </motion.div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* FAQ Section */}
-      <FAQSection />
+              <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-muted-text">
+                <ChevronDown className="w-8 h-8" />
+              </div>
+            </header>
 
-      {/* Signup Section */}
-      <SignupSection />
+            {/* Features Section */}
+            <section id="perks" className="py-32 px-6 relative overflow-hidden">
+              <div className="max-w-7xl mx-auto relative z-10">
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-20">
+                  <div className="max-w-2xl">
+                    <h2 className="text-5xl md:text-7xl font-display font-black leading-none mb-6">
+                      Creator <span className="text-brand">perks.</span>
+                    </h2>
+                    <p className="text-xl text-muted-text">
+                      We create pathways for you to grow, get noticed, and build momentum through high-impact activations.
+                    </p>
+                  </div>
 
-      <Footer />
+                </div>
+
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {FEATURES.map((feature, i) => (
+                    <FeatureCard key={feature.id} feature={feature} index={i} />
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            <CreatorTypesSection />
+
+            <HowItWorksSection />
+
+            {/* Stats / Social Proof */}
+            <section className="py-20 border-y border-white/5 bg-[#141414] overflow-hidden">
+              <div className="flex whitespace-nowrap">
+                <div className="flex gap-20 animate-marquee items-center">
+                  {[
+                    'UGC Campaigns', 'Partnerships', 'Exclusive Drops', 'Early Access', 'Tournaments', 'Community Visibility'
+                  ].map((text, i) => (
+                    <div key={i} className="flex items-center gap-4">
+                      <Star className="w-6 h-6 text-brand fill-brand" />
+                      <span className="text-6xl font-display font-black text-white/20">{text}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex gap-20 animate-marquee items-center ml-20">
+                  {[
+                    'Ugc campaigns', 'Partnerships', 'Exclusive Drops', 'Early Access', 'Tournaments', 'Community Visibility'
+                  ].map((text, i) => (
+                    <div key={i} className="flex items-center gap-4">
+                      <Star className="w-6 h-6 text-brand fill-brand" />
+                      <span className="text-6xl font-display font-black text-white/20">{text}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* FAQ Section */}
+            <FAQSection />
+
+            {/* Signup Section */}
+            <SignupSection onTermsClick={() => setShowTerms(true)} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <Footer onTermsClick={() => setShowTerms(true)} />
 
       <style>{`
         @keyframes marquee {
@@ -692,6 +842,6 @@ export default function App() {
   );
 }
 
-function SignupSection() {
-  return <SignupForm />;
+function SignupSection({ onTermsClick }: { onTermsClick: () => void }) {
+  return <SignupForm onTermsClick={onTermsClick} />;
 }

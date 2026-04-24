@@ -1,9 +1,10 @@
 {
+  "applyNowUrl": "https://forms.gle/yRB9xYg2eycjvgth7",
   "features": [
     {
       "id": "opportunities",
       "title": "Access to Opportunities",
-      "description": "Get direct access to exclusive brand deals and opportunities tailored to your niche.",
+      "description": "Get direct access to exclusive campaigns and opportunities matched to your content.",
       "icon": "Trophy",
       "image": "images/players.avif"
     },
@@ -17,21 +18,21 @@
     {
       "id": "early-access",
       "title": "Early Access",
-      "description": "Be the first to play new titles and test upcoming features before they hit the mainstream.",
+      "description": "Be the first to play new titles and test upcoming features before public launch.",
       "icon": "Star",
       "image": "images/earlyaccess.jpg"
     },
     {
       "id": "events",
       "title": "Events and Tournaments",
-      "description": "Compete in exclusive tournaments and attend invite only events.",
+      "description": "Compete in exclusive tournaments and attend invite-only events.",
       "icon": "Gamepad2",
       "image": "images/tourn.webp"
     },
     {
       "id": "community",
       "title": "Community and Visibility",
-      "description": "Boost your reach through our network and connect with a community of elite creators.",
+      "description": "Grow your reach through the network and connect with a community of serious gaming creators.",
       "icon": "Users",
       "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=800"
     }
@@ -39,56 +40,56 @@
   "faqs": [
     {
       "question": "What is the JioGames Creator Network?",
-      "answer": "JioGames Creator Network is a premier platform designed to bridge the gap between ambitious gaming creators and world-class brands for UGC campaigns and collaborations."
+      "answer": "JioGames Creator Network is the in-house program for discovering, supporting and working with creators. Members get direct access to campaigns, drops, events and early releases on JioGames."
     },
     {
       "question": "How do I qualify for the network?",
-      "answer": "We look for creators who bring genuine passion, consistent quality, and a meaningful presence in the gaming community. It’s not about your numbers—it’s about your drive, creativity, and commitment. Every application is carefully reviewed by our team with that in mind."
+      "answer": "We look for consistency, quality and genuine love of gaming. Follower count matters less than what you post and how often. Every application is read by our team. "
     },
     {
       "question": "Is this only for gaming creators?",
-      "answer": "Yes. The Creator Network is launching as a 'gamer first' program."
+      "answer": "Yes. The Creator Network is launching as a 'gamer first' program. "
     },
     {
       "question": "Which platforms are eligible?",
-      "answer": "All major platforms qualify, YouTube, Instagram, X, Twitch, Facebook, Reddit and Discord. If you consistently create gaming content on any platform, you can apply."
+      "answer": "All major platforms are ellgible: YouTube, Instagram, X, Twitch, Facebook, Reddit, and Discord. If you consistently create gaming content on any platform, you can apply."
     },
     {
       "question": "Is this a paid program?",
-      "answer": "It’s free to apply and participate. The Creator Network is designed to support creators. Members gain access to collaboration opportunities and partnered benefits."
+      "answer": "It’s free to apply and participate. Members gain access to campaigns, drops and collabortation opportunities. Payouts are not part of this phase"
     },
     {
       "question": "Can I join if I’m part of other creator programs?",
-      "answer": "Yes. Being part of the Creator Network doesn’t restrict you from working with other platforms or programs. In rare cases where a campaign requires exclusivity, it will be clearly communicated in advance."
+      "answer": "Yes. Being part of the Creator Network doesn’t restrict you from working with other platforms or programs. When campaign requires exclusivity, it will be clearly communicated in advance."
     },
     {
       "question": "What happens if I’m not selected?",
-      "answer": "Your application remains active. Some creators are not selected initially but are brought in later based on their growth and consistency. Continue creating and reapplying."
+      "answer": "Your application remains active. Some creators are not selected right away but are brought in later based as they growth and stay consistent. Keep creating and Keep applying"
     },
     {
       "question": "Does a referral improve my chances?",
-      "answer": "Yes. A referral signals that an existing member believes you’re a strong fit. While it doesn’t guarantee selection, it is a meaningful factor in our evaluation."
+      "answer": "Yes. A referral tells us an existing member is backing you, which carries weight in our review. It does not guarantee selection, but it counts."
     }
   ],
   "creatorTypes": [
     {
       "title": "Gameplay Creators",
-      "description": "Livestreams, Walkthroughs, Highlights, Challenges, Clips.",
+      "description": "Livestreams, Walkthroughs, Highlights, Challenges, Clips",
       "image": "images/creator.png"
     },
     {
       "title": "Short-form",
-      "description": "Reels/Shorts, Edits, Hooks, Reactions, Memes.",
+      "description": "Reels/Shorts, Edits, Hooks, Reactions, Memes",
       "image": "images/reels.jpeg"
     },
     {
       "title": "Esports",
-      "description": "Competitive Players, Hosts, Analysts, Tournament/event coverage.",
+      "description": "Competitive Players, Hosts, Analysts, Tournament/Event Coverage",
       "image": "images/esports.png"
     },
     {
       "title": "Fan Creators",
-      "description": "Art, Cosplayers, UGC concepts, Community Builds.",
+      "description": "Art, Cosplayers, UGC Concepts, Community Builds",
       "image": "images/cosplay.png"
     }
   ],
@@ -96,22 +97,22 @@
     {
       "number": "01",
       "title": "Apply",
-      "description": "Submit your details, platforms and format. We only ask what helps us activate your quickly."
+      "description": "Submit your details, platforms and format. We only ask we need."
     },
     {
       "number": "02",
       "title": "Review",
-      "description": "We score for quality, consistency and fit. Creators are bucketed for the right opportunities."
+      "description": "We score for quality, consistency and fit, then match you to the right opportunities."
     },
     {
       "number": "03",
       "title": "Activate",
-      "description": "Selected creators receive briefs, assets and opportunities. As the Network grows, rewards expand."
+      "description": "Selected creators receive briefs, assets and opportunities. As the network grows, rewards expand."
     },
     {
       "number": "04",
       "title": "Scale",
-      "description": "We turn what works into a repeatable creator engines for JioGames."
+      "description": "We turn what works into repeatable creator engines for JioGames."
     }
   ],
   "footerColumns": [
@@ -119,7 +120,7 @@
       "title": "Devices",
       "links": [
         {
-          "label": "Jio Set-Top-Box",
+          "label": "Jio Set-top-box",
           "url": "https://www.jio.com/jcms/jiofiber/services/jio-set-top-box/"
         },
         {
@@ -132,7 +133,7 @@
       "title": "Gaming Zone",
       "links": [
         {
-          "label": "Cloudaming",
+          "label": "Cloud Gaming",
           "url": "https://jiogames.com/"
         },
         {
@@ -148,7 +149,7 @@
           "url": "https://watch.jiogames.com/"
         },
         {
-          "label": "Compte",
+          "label": "Compete",
           "url": "https://play.jiogames.com/esports"
         },
         {
@@ -245,7 +246,7 @@
     },
     {
       "platform": "Discord",
-      "url": "https://discord.com/invite/vGzjx7uc4u",
+      "url": "https://discord.gg/Q7fTEEbs63",
       "icon": "https://jiogames.com/assets/footer/discord.png"
     }
   ],
@@ -261,14 +262,14 @@
   ],
   "referralOptions": [
     "None",
-    "Bulletthekrazygamer",
+    "BulletTheKrazyGamer",
     "Zitrakz Gaming",
     "Sly Singh",
     "Cyano",
-    "AFKushh",
+    "Afkushh",
     "Renegade",
     "Prashant Plays",
-    "NyaraMeow",
-    "Gigigonemad"
+    "Nyarameow",
+    "GigiGoneMad"
   ]
 }
